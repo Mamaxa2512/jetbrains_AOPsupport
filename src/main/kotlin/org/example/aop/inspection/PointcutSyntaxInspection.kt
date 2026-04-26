@@ -32,16 +32,25 @@ class PointcutSyntaxInspection : AbstractBaseJavaLocalInspectionTool() {
         // Спочатку базова валідація
         val basicError = AopInspectionRules.validatePointcutExpression(expression)
         if (basicError != null) {
-            holder.registerProblem(element, basicError)
+            // Реєструємо проблему з AI Quick Fix
+            holder.registerProblem(
+                element,
+                basicError,
+                org.example.aop.ai.quickfix.AiFixPointcutQuickFix(basicError)
+            )
             return
         }
 
         // Потім детальний синтаксичний аналіз
         val parseResult = PointcutParser.parse(expression)
         
-        // Реєструємо помилки
+        // Реєструємо помилки з AI Quick Fix
         for (error in parseResult.errors) {
-            holder.registerProblem(element, error.message)
+            holder.registerProblem(
+                element,
+                error.message,
+                org.example.aop.ai.quickfix.AiFixPointcutQuickFix(error.message)
+            )
         }
         
         // Реєструємо попередження (як weak warnings)

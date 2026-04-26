@@ -1,0 +1,276 @@
+2026-04-26 16:33:59,010 [    533]   INFO - #c.i.i.p.PluginManager - Using broken plugins file from IDE distribution
+2026-04-26 16:33:59,043 [    566]   INFO - #c.i.i.p.PluginManager - PluginDescriptor(name=AOP Support, id=io.github.anonim.aop-support, descriptorPath=plugin.xml, path=~/IdeaProjects/AOP/.intellijPlatform/sandbox/AOP/IC-2025.1/plugins-test/AOP, version=1.1.0-beta.1, package=null, isBundled=false) overrides PluginDescriptor(name=AOP Support, id=io.github.anonim.aop-support, descriptorPath=plugin.xml, path=~/IdeaProjects/AOP/.intellijPlatform/sandbox/AOP/IC-2025.1/plugins-test/AOP, version=1.1.0-beta.1, package=null, isBundled=true)
+2026-04-26 16:33:59,055 [    578]   INFO - #c.i.i.p.PluginManager - Module intellij.settingsSync.core is not enabled because dependency Git4Idea is not available
+Module intellij.platform.images.backend.svg is not enabled because dependency com.intellij.platform.images is not available
+Module intellij.platform.images.copyright is not enabled because dependency com.intellij.platform.images is not available
+Module intellij.java.terminal is not enabled because dependency org.jetbrains.plugins.terminal is not available
+Module intellij.java.performancePlugin is not enabled because dependency intellij.performanceTesting.vcs is not available
+Module intellij.java.featuresTrainer is not enabled because dependency training is not available
+Module intellij.kotlin.onboarding-promoter is not enabled because dependency kotlin.features-trainer is not available
+2026-04-26 16:33:59,058 [    581]   INFO - #c.i.i.p.PluginManager - Loaded bundled plugins: IDEA CORE (251.23774.435), Java (251.23774.435)
+2026-04-26 16:33:59,058 [    581]   INFO - #c.i.i.p.PluginManager - Loaded custom plugins: AOP Support (1.1.0-beta.1)
+2026-04-26 16:33:59,163 [    686]   INFO - #c.i.a.o.PathMacrosImpl - Loaded path macros: {}
+2026-04-26 16:33:59,168 [    691]   INFO - #c.i.i.p.ExpiredPluginsState - Plugins to skip: []
+2026-04-26 16:33:59,190 [    713]   INFO - #c.i.p.k.b.BackendKernelServiceKt - Backend started Kernel
+2026-04-26 16:33:59,207 [    730]   INFO - #c.i.u.i.PageCacheUtils - File page caching params:
+	DEFAULT_PAGE_SIZE: 10485760
+	Direct memory to use, max: 2126512128
+	FilePageCache: regular
+	Regular FilePageCache: 629145600 bytes
+	DirectByteBuffers pool: 104857600 bytes
+2026-04-26 16:33:59,214 [    737]   INFO - #c.i.o.v.n.p.PersistentFSLoader - VFS uses names enumerator over mmapped file
+2026-04-26 16:33:59,215 [    738]   INFO - #c.i.o.v.n.p.PersistentFSLoader - VFS uses streamlined attributes storage (over mmapped file)
+2026-04-26 16:33:59,215 [    738]   INFO - #c.i.o.v.n.p.PersistentFSLoader - VFS uses content storage over memory-mapped file, with compression algo: LZ4[ > 8000b ]
+2026-04-26 16:33:59,215 [    738]   INFO - #c.i.o.v.n.p.PersistentFSLoader - VFS uses OverMMappedFile(pageSize=67108864, acquireStorageOwnership=true) storage for main file records table
+2026-04-26 16:33:59,255 [    778]   INFO - #fleet.kernel.Transactor - Duration: 51.943195ms, change from: fleet.tracing.runtime.Span$Noop@4ff9aff
+2026-04-26 16:33:59,267 [    790]   INFO - #c.i.p.d.t.TelemetryManager - Loaded telemetry tracer service com.intellij.platform.diagnostic.telemetry.impl.TelemetryManagerImpl
+2026-04-26 16:33:59,288 [    811]   INFO - #c.i.o.v.n.p.PersistentFSLoader - VFS: impl (expected) version=846400, 0 file records, 0 content blobs
+2026-04-26 16:33:59,292 [    815]   INFO - #c.i.o.v.n.p.FSRecordsImpl - VFS initialized: 84 ms, 0 failed attempts, 0 error(s) were recovered
+2026-04-26 16:33:59,293 [    816]   INFO - #c.i.o.v.n.p.FSRecordsImpl - VFS scanned: file-by-name index was populated
+2026-04-26 16:33:59,299 [    822]   INFO - #c.i.o.v.n.p.PersistentFSImpl - VFS.MAX_FILE_LENGTH_TO_CACHE: 1048576
+2026-04-26 16:33:59,322 [    845]   INFO - #c.i.o.a.ConfigImportHelper - [i18n] Localization property from registry is null
+2026-04-26 16:33:59,367 [    890]   INFO - #c.i.u.n.s.CertificateManager - Default SSL context initialized
+2026-04-26 16:33:59,370 [    893]   INFO - #c.i.u.i.FileBasedIndexImpl - Loading indexes
+2026-04-26 16:33:59,373 [    896]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:33:59,380 [    903]   INFO - #c.i.o.v.i.l.NativeFileWatcherImpl - Native file watcher is disabled
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'Trigram.Index' index (applicable providers: [default, fake-storage]), shards = 1
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'XmlNamespaces' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'html5.custom.attributes.index' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'fileIncludes' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'XmlTagNames' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'SchemaTypeInheritance' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'filetypes' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'Stubs' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'FrameworkDetectionIndex' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'TodoIndex' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'FilenameIndex' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'DomFileIndex' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'RelaxSymbolIndex' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,408 [    931]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'java.source.module.name' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,409 [    932]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'java.auto.module.name' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,409 [    932]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'IdIndex' index (applicable providers: [default, fake-storage]), shards = 1
+2026-04-26 16:33:59,414 [    937]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'java.null.method.argument' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,444 [    967]   INFO - #c.i.u.i.i.SlruIndexStorageCacheProvider - SLRU cache will be used for indexes
+2026-04-26 16:33:59,445 [    968]   INFO - #c.i.u.i.i.MapIndexStorageCacheProvider$Companion - Default index storage cache provider [com.intellij.util.indexing.impl.SlruIndexStorageCacheProvider@6d938cb7] is used
+2026-04-26 16:33:59,456 [    979]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'java.fun.expression' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,460 [    983]   INFO - #c.i.p.p.ProjectEntitiesStorage - Creating entity for project ProjectId(id=7mmnv38d7jvlil2866o5)
+2026-04-26 16:33:59,463 [    986]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'java.binary.plus.expression' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,464 [    987]   INFO - #c.i.u.i.i.s.IndexStorageLayoutLocator - Layout 'default' will be used to for 'bytecodeAnalysis' index (applicable providers: [default, fake-storage])
+2026-04-26 16:33:59,476 [    999]   INFO - #c.i.p.p.ProjectEntitiesStorage - Entity for project ProjectId(id=7mmnv38d7jvlil2866o5) created successfully
+2026-04-26 16:33:59,483 [   1006]   INFO - #c.i.c.ComponentStoreImpl - Project store initialization started for path: /tmp/unitTest__aspect_without_Spring_bean_annotation_is_flagged_3Cto4novYRx7CL31grKizqNBj42/light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd.ipr and template: null
+2026-04-26 16:33:59,485 [   1008]   INFO - #c.i.c.ComponentStoreImpl - Project store initialized with paths: [Macro(key=$PROJECT_FILE$, value=/tmp/unitTest__aspect_without_Spring_bean_annotation_is_flagged_3Cto4novYRx7CL31grKizqNBj42/light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd.ipr), Macro(key=$WORKSPACE_FILE$, value=/tmp/unitTest__aspect_without_Spring_bean_annotation_is_flagged_3Cto4novYRx7CL31grKizqNBj42/light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd.iws), Macro(key=$PRODUCT_WORKSPACE_FILE$, value=/tmp/unitTest__aspect_without_Spring_bean_annotation_is_flagged_3Cto4novYRx7CL31grKizqNBj42/light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd.iws), Macro(key=$CACHE_FILE$, value=/home/anonim/IdeaProjects/AOP/.intellijPlatform/sandbox/AOP/IC-2025.1/system-test/projects/light_temp_3cto4wetuooykxkfha0ewlgdqmd.c4987708/cache-state.xml)]
+2026-04-26 16:33:59,487 [   1010]   INFO - #c.i.u.i.FileBasedIndexImpl - Indices to be built:java.null.method.argument(v = 1),TodoIndex(v = 13),Trigram.Index(v = 4),bytecodeAnalysis(v = 11),java.binary.plus.expression(v = 4),RelaxSymbolIndex(v = 0),java.fun.expression(v = 6),XmlNamespaces(v = 8),FilenameIndex(v = 258),Stubs(v = 46),FrameworkDetectionIndex(v = 65536),fileIncludes(v = 6),IdIndex(v = 22),html5.custom.attributes.index(v = 1),XmlTagNames(v = 1),DomFileIndex(v = 0),filetypes(v = 4096),java.auto.module.name(v = 6),java.source.module.name(v = 4),SchemaTypeInheritance(v = 2)
+2026-04-26 16:33:59,490 [   1013]   INFO - #c.i.u.i.c.d.IndexWriter - Use com.intellij.util.indexing.contentQueue.dev.MultiThreadedWithSuspendIndexWriter@22a6e884 as (parallel) index writer implementation
+2026-04-26 16:33:59,490 [   1013]   INFO - #c.i.u.i.FileBasedIndexImpl - Using simple flusher for indexes
+2026-04-26 16:33:59,493 [   1016]   INFO - #c.i.u.i.IndexDataInitializer - Index data initialization done: 119 ms. Initialized indexes: [FilenameIndex, filetypes, DomFileIndex, RelaxSymbolIndex, html5.custom.attributes.index, XmlNamespaces, XmlTagNames, Trigram.Index, SchemaTypeInheritance, java.null.method.argument, java.auto.module.name, java.source.module.name, java.fun.expression, bytecodeAnalysis, java.binary.plus.expression, TodoIndex, fileIncludes, IdIndex, FrameworkDetectionIndex, Stubs].
+2026-04-26 16:33:59,502 [   1025]   INFO - #c.i.j.JnaLoader - JNA library (64-bit) loaded in 7 ms
+2026-04-26 16:33:59,521 [   1044]   INFO - #c.i.w.i.i.l.m.ModuleBridgeLoaderService - Workspace model loaded without cache. Loading real project state into workspace model. Thread[#75,DefaultDispatcher-worker-24 @coroutine#226,6,main]
+2026-04-26 16:33:59,522 [   1045]   INFO - #c.i.p.s.StubIndexImpl - Following stub indices will be built:java.class.extlist(v = 3),dom.elementClass(v = 0),java.unnamed.class(v = 2),java.class.shortname(v = 4),java.anonymous.baseref(v = 2),java.class.fqn(v = 1),java.method.parameter.types(v = 3),jvm.static.member.type(v = 2),java.module.name(v = 4),dom.namespaceKey(v = 1),java.method.name(v = 2),java.field.name(v = 2),java.annotations(v = 2),jvm.static.member.name(v = 2)
+2026-04-26 16:33:59,523 [   1046]   INFO - #c.i.u.i.IndexDataInitializer - Index data initialization done: 29 ms. Initialized stub indexes: {dom.namespaceKey, java.field.name, java.class.extlist, java.method.parameter.types, java.unnamed.class, dom.elementClass, java.annotations, java.class.fqn, jvm.static.member.type, java.class.shortname, java.method.name, jvm.static.member.name, java.anonymous.baseref, java.module.name}.
+2026-04-26 16:33:59,553 [   1076]   INFO - #c.i.w.i.i.GlobalWorkspaceModel - Sync global entities with mutable entity storage
+2026-04-26 16:33:59,605 [   1128]   INFO - #c.i.w.i.i.j.s.JpsProjectModelSynchronizer - Attempt 1: Apply JPS storage (iml files)
+2026-04-26 16:33:59,632 [   1155]   INFO - #c.i.w.i.i.EntitiesOrphanageImpl - Update orphanage. 0 modules added
+2026-04-26 16:33:59,637 [   1160]   INFO - #c.i.w.i.i.j.s.JpsProjectModelSynchronizer - Attempt 1: Changes were successfully applied
+2026-04-26 16:33:59,872 [   1395]   INFO - #c.i.w.i.i.EntitiesOrphanageImpl - Update orphanage. 0 modules added
+2026-04-26 16:33:59,877 [   1400]   INFO - #c.i.w.i.i.WorkspaceModelImpl - Project model updated to version 2 in 142 ms: Module model commit
+2026-04-26 16:33:59,896 [   1419]   INFO - #c.i.u.s.JBUIScale - Computed user scale factor: 1.0 (JRE-managed HiDPI)
+2026-04-26 16:33:59,952 [   1475]   INFO - #c.i.w.i.i.EntitiesOrphanageImpl - Update orphanage. 0 modules added
+2026-04-26 16:33:59,954 [   1477]   INFO - #c.i.o.a.i.NonBlockingReadActionImpl - OTel monitoring for NonBlockingReadAction is enabled
+2026-04-26 16:33:59,959 [   1482]   INFO - #c.i.w.i.i.WorkspaceModelImpl - Project model updated to version 3 in 16 ms: Root model commit
+2026-04-26 16:33:59,976 [   1499]   INFO - #c.i.o.p.MergingQueueGuiExecutor - Running task: (dumb mode task) com.intellij.openapi.project.InitialDumbTaskRequiredForSmartMode@16539ac6
+2026-04-26 16:33:59,977 [   1500]   INFO - #c.i.o.p.DumbServiceMergingTaskQueue - Initializing DumbServiceMergingTaskQueue...
+2026-04-26 16:33:59,979 [   1502]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Running task required for smart mode: com.intellij.util.indexing.ProjectFileBasedIndexStartupActivity@14f49aab
+2026-04-26 16:33:59,980 [   1503]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:33:59,981 [   1504]   INFO - #c.i.u.i.p.IncrementalProjectIndexableFilesFilterHolder - PersistentProjectIndexableFilesFilterFactory is chosen as indexable files filter factory for project: light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd
+2026-04-26 16:33:59,984 [   1507]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:00,010 [   1533]   INFO - c.i.p.i.IdeFingerprint - Calculated dependencies fingerprint in 6 ms (hash=1cfq3ua1auurj, buildTime=1744642800, appVersion=IC-251.23774.435)
+2026-04-26 16:34:00,011 [   1534]   INFO - #c.i.u.i.d.AppIndexingDependenciesService - Invalidating all indexing flags. Reason: App fingerprint changed: FingerprintImpl(fingerprint=0) to FingerprintImpl(fingerprint=6375335556004316479)
+2026-04-26 16:34:00,020 [   1543]   INFO - #c.i.u.i.UnindexedFilesScanner - Full scanning on startup will NOT be skipped for project light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd because of following unsatisfied conditions:
+FILTER_IS_NOT_UP_TO_DATE: Persistent indexable files filter is NOT up-to-date because of following unsatisfied conditions: [IS_FILTER_LOADED_FROM_DISK, FILTER_IS_NOT_INVALIDATED, INDEXING_REQUEST_ID_DID_NOT_CHANGE_AFTER_LAST_SCANNING]
+2026-04-26 16:34:00,022 [   1545]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7d4eac9b
+2026-04-26 16:34:00,022 [   1545]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7d4eac9b
+2026-04-26 16:34:00,026 [   1549]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Finished task required for smart mode: com.intellij.util.indexing.ProjectFileBasedIndexStartupActivity@14f49aab
+2026-04-26 16:34:00,026 [   1549]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Running task required for smart mode: com.intellij.util.indexing.FileBasedIndexInfrastructureExtensionStartup@2bd35d9e
+2026-04-26 16:34:00,026 [   1549]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Finished task required for smart mode: com.intellij.util.indexing.FileBasedIndexInfrastructureExtensionStartup@2bd35d9e
+2026-04-26 16:34:00,026 [   1549]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Running task required for smart mode: com.intellij.util.indexing.DumbModeWhileScanningSubscriber@19b5fd99
+2026-04-26 16:34:00,027 [   1550]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Finished task required for smart mode: com.intellij.util.indexing.DumbModeWhileScanningSubscriber@19b5fd99
+2026-04-26 16:34:00,027 [   1550]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Running task required for smart mode: com.intellij.ide.projectWizard.generators.SdkPreIndexingRequiredForSmartModeActivity@54054522
+2026-04-26 16:34:00,028 [   1551]   INFO - #c.i.o.p.InitialDumbTaskRequiredForSmartMode - Finished task required for smart mode: com.intellij.ide.projectWizard.generators.SdkPreIndexingRequiredForSmartModeActivity@54054522
+2026-04-26 16:34:00,029 [   1552]   INFO - #c.i.o.p.MergingQueueGuiExecutor - Task finished: (dumb mode task) com.intellij.openapi.project.InitialDumbTaskRequiredForSmartMode@16539ac6
+2026-04-26 16:34:00,041 [   1564]   INFO - #c.i.o.p.DumbServiceImpl - exit dumb mode [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd]
+2026-04-26 16:34:00,046 [   1569]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@3bd0d7d5
+2026-04-26 16:34:00,059 [   1582]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=0): DelayedPushProperties
+2026-04-26 16:34:00,064 [   1587]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:00,064 [   1587]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd. Reason: On project open
+2026-04-26 16:34:00,065 [   1588]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=0): CreatingIterators
+2026-04-26 16:34:00,117 [   1640]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=0): CollectingIndexableFiles
+2026-04-26 16:34:00,117 [   1640]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.ReadWriteScanningRequestTokenImpl@737c7845
+2026-04-26 16:34:00,117 [   1640]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:00,118 [   1641]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd uses 16 scanning threads
+2026-04-26 16:34:00,197 [   1720]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of meta-ext.rnc (id=49) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),IdIndex->NOT_INDEXED(not indexed),]. Scanner has updated file meta-ext.rnc (id=49) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=49, fileInfo='meta-ext.rnc(id=49)'}] and removers: []; 
+2026-04-26 16:34:00,198 [   1721]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of embed-ext.rnc (id=45) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),IdIndex->NOT_INDEXED(not indexed),]. Scanner has updated file embed-ext.rnc (id=45) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=45, fileInfo='embed-ext.rnc(id=45)'}] and removers: []; 
+2026-04-26 16:34:00,199 [   1722]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of common-ext.rnc (id=42) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),IdIndex->NOT_INDEXED(not indexed),]. Scanner has updated file common-ext.rnc (id=42) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=42, fileInfo='common-ext.rnc(id=42)'}] and removers: []; 
+2026-04-26 16:34:00,201 [   1724]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of 0004_ping.patch (id=48) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file 0004_ping.patch (id=48) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=48, fileInfo='0004_ping.patch(id=48)'}] and removers: []; 
+2026-04-26 16:34:00,201 [   1724]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of 0001_html5.patch (id=38) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file 0001_html5.patch (id=38) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=38, fileInfo='0001_html5.patch(id=38)'}] and removers: []; 
+2026-04-26 16:34:00,202 [   1725]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of 0002_xhtml5.patch (id=43) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file 0002_xhtml5.patch (id=43) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=43, fileInfo='0002_xhtml5.patch(id=43)'}] and removers: []; 
+2026-04-26 16:34:00,202 [   1725]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of 0007_legacy.patch (id=47) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file 0007_legacy.patch (id=47) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=47, fileInfo='0007_legacy.patch(id=47)'}] and removers: []; 
+2026-04-26 16:34:00,202 [   1725]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of patch_build.patch (id=40) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file patch_build.patch (id=40) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=40, fileInfo='patch_build.patch(id=40)'}] and removers: []; 
+2026-04-26 16:34:00,202 [   1725]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of core-scripting-ext.rnc (id=46) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),IdIndex->NOT_INDEXED(not indexed),]. Scanner has updated file core-scripting-ext.rnc (id=46) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=46, fileInfo='core-scripting-ext.rnc(id=46)'}] and removers: []; 
+2026-04-26 16:34:00,203 [   1726]   INFO - #c.i.u.i.IndexingReasonExplanationLogger - Scheduling indexing of 0008_svg_gradient.patch (id=44) by request of indexes: [filetypes->NOT_INDEXED(not indexed),Trigram.Index->NOT_INDEXED(not indexed),]. Scanner has updated file 0008_svg_gradient.patch (id=44) with appliers: [SingleIndexValueApplier{indexId=filetypes, inputId=44, fileInfo='0008_svg_gradient.patch(id=44)'}] and removers: []; 
+2026-04-26 16:34:00,264 [   1787]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:00,264 [   1787]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.ReadWriteScanningRequestTokenImpl@737c7845, successful: true
+2026-04-26 16:34:00,265 [   1788]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd. Number of scanned files: 208; number of files for indexing: 208
+2026-04-26 16:34:00,270 [   1793]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteIndexingToken@1742f9a3
+2026-04-26 16:34:00,271 [   1794]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=0): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@3bd0d7d5
+2026-04-26 16:34:00,271 [   1794]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7d4eac9b, successful: true
+2026-04-26 16:34:00,279 [   1802]   INFO - #c.i.o.p.DumbServiceImpl - enter dumb mode [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd]
+2026-04-26 16:34:00,281 [   1804]   INFO - #c.i.o.p.MergingQueueGuiExecutor - Running task: (dumb mode task) UnindexedFilesIndexer[light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd, reasons: [On project open]]
+2026-04-26 16:34:00,282 [   1805]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:00,289 [   1812]   INFO - #c.i.u.i.c.IndexUpdateRunner - Using 16 workers for indexing and 4 for writing indexes
+2026-04-26 16:34:00,506 [   2029]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 8 finished gracefully
+2026-04-26 16:34:00,510 [   2033]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 6 finished gracefully
+2026-04-26 16:34:00,517 [   2040]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 4 finished gracefully
+2026-04-26 16:34:00,524 [   2047]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 7 finished gracefully
+2026-04-26 16:34:00,551 [   2074]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 3 finished gracefully
+2026-04-26 16:34:00,558 [   2081]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 14 finished gracefully
+2026-04-26 16:34:00,559 [   2082]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 1 finished gracefully
+2026-04-26 16:34:00,568 [   2091]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 10 finished gracefully
+2026-04-26 16:34:00,591 [   2114]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 12 finished gracefully
+2026-04-26 16:34:00,625 [   2148]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 11 finished gracefully
+2026-04-26 16:34:00,682 [   2205]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 5 finished gracefully
+2026-04-26 16:34:00,706 [   2229]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 15 finished gracefully
+2026-04-26 16:34:00,719 [   2242]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 9 finished gracefully
+2026-04-26 16:34:00,733 [   2256]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 0 finished gracefully
+2026-04-26 16:34:00,735 [   2258]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 13 finished gracefully
+2026-04-26 16:34:00,738 [   2261]   INFO - #c.i.u.i.c.IndexUpdateRunner - Coroutine 2 finished gracefully
+2026-04-26 16:34:00,762 [   2285]   INFO - #c.i.u.i.ProjectChangedFilesScanner - Retrieving changed during indexing files of light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd : 0 to update, calculated in 0ms
+2026-04-26 16:34:00,764 [   2287]   INFO - #c.i.u.i.UnindexedFilesIndexer - Finished for light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd. Unindexed files update took 477ms; general responsiveness: ok; EDT responsiveness: ok
+2026-04-26 16:34:00,765 [   2288]   INFO - #c.i.o.p.MergingQueueGuiExecutor - Task finished: (dumb mode task) UnindexedFilesIndexer[light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd, reasons: [On project open]]
+2026-04-26 16:34:00,765 [   2288]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteIndexingToken@1742f9a3, successful: true
+2026-04-26 16:34:00,765 [   2288]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteIndexingToken@1742f9a3
+2026-04-26 16:34:00,778 [   2301]   INFO - #c.i.o.p.DumbServiceImpl - exit dumb mode [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmd]
+2026-04-26 16:34:00,842 [   2365]   INFO - #c.i.o.e.s.p.m.ExternalProjectsDataStorage - Load external projects data in 5 millis (read time: 4)
+2026-04-26 16:34:00,905 [   2428]   INFO - #c.i.p.c.ProjectCodeStyleSettingsManager - Initialized from default code style settings.
+2026-04-26 16:34:01,324 [   2847]   INFO - #c.i.u.s.JBUIScale - System scale factor: 1.0 (JRE-managed HiDPI)
+2026-04-26 16:34:01,732 [   3255]   INFO - #c.i.i.b.BookmarksManager - no state loaded for new bookmarks
+2026-04-26 16:34:01,733 [   3256]   INFO - #c.i.i.b.BookmarkManager - no state loaded for old bookmarks
+2026-04-26 16:34:01,737 [   3260]   INFO - #c.i.i.f.FavoritesManager - no state loaded for old favorites
+2026-04-26 16:34:02,367 [   3890]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@28e31bdd
+2026-04-26 16:34:02,368 [   3891]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@28e31bdd
+2026-04-26 16:34:02,408 [   3931]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@109b98d9
+2026-04-26 16:34:02,409 [   3932]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=1): DelayedPushProperties
+2026-04-26 16:34:02,410 [   3933]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:02,413 [   3936]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of empty pointcut expression is flagged. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:02,414 [   3937]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=1): CreatingIterators
+2026-04-26 16:34:02,416 [   3939]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=1): CollectingIndexableFiles
+2026-04-26 16:34:02,417 [   3940]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@22ff9e02
+2026-04-26 16:34:02,418 [   3941]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of empty pointcut expression is flagged uses 16 scanning threads
+2026-04-26 16:34:02,446 [   3969]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:02,446 [   3969]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@22ff9e02, successful: true
+2026-04-26 16:34:02,447 [   3970]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for empty pointcut expression is flagged. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:02,449 [   3972]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for empty pointcut expression is flagged. No files to index with loading content.
+2026-04-26 16:34:02,449 [   3972]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=1): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@109b98d9
+2026-04-26 16:34:02,449 [   3972]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@28e31bdd, successful: true
+2026-04-26 16:34:02,449 [   3972]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@28e31bdd
+2026-04-26 16:34:02,610 [   4133]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7a0085c0
+2026-04-26 16:34:02,610 [   4133]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7a0085c0
+2026-04-26 16:34:02,645 [   4168]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@6e120c28
+2026-04-26 16:34:02,645 [   4168]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=2): DelayedPushProperties
+2026-04-26 16:34:02,646 [   4169]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:02,650 [   4173]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of trailing operator in pointcut is flagged. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:02,651 [   4174]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=2): CreatingIterators
+2026-04-26 16:34:02,654 [   4177]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=2): CollectingIndexableFiles
+2026-04-26 16:34:02,654 [   4177]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@25321cc0
+2026-04-26 16:34:02,654 [   4177]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of trailing operator in pointcut is flagged uses 16 scanning threads
+2026-04-26 16:34:02,669 [   4192]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:02,669 [   4192]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@25321cc0, successful: true
+2026-04-26 16:34:02,670 [   4193]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for trailing operator in pointcut is flagged. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:02,671 [   4194]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for trailing operator in pointcut is flagged. No files to index with loading content.
+2026-04-26 16:34:02,671 [   4194]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=2): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@6e120c28
+2026-04-26 16:34:02,671 [   4194]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7a0085c0, successful: true
+2026-04-26 16:34:02,671 [   4194]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@7a0085c0
+2026-04-26 16:34:02,818 [   4341]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@2d5ad8b
+2026-04-26 16:34:02,818 [   4341]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@2d5ad8b
+2026-04-26 16:34:02,851 [   4374]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@10c83a47
+2026-04-26 16:34:02,852 [   4375]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=3): DelayedPushProperties
+2026-04-26 16:34:02,853 [   4376]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:02,855 [   4378]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of unknown designator in pointcut is flagged. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:02,855 [   4378]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=3): CreatingIterators
+2026-04-26 16:34:02,857 [   4380]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=3): CollectingIndexableFiles
+2026-04-26 16:34:02,857 [   4380]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@51b2f0b0
+2026-04-26 16:34:02,858 [   4381]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of unknown designator in pointcut is flagged uses 16 scanning threads
+2026-04-26 16:34:02,873 [   4396]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:02,873 [   4396]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@51b2f0b0, successful: true
+2026-04-26 16:34:02,873 [   4396]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for unknown designator in pointcut is flagged. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:02,875 [   4398]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for unknown designator in pointcut is flagged. No files to index with loading content.
+2026-04-26 16:34:02,875 [   4398]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=3): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@10c83a47
+2026-04-26 16:34:02,875 [   4398]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@2d5ad8b, successful: true
+2026-04-26 16:34:02,875 [   4398]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@2d5ad8b
+2026-04-26 16:34:03,012 [   4535]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@19369a48
+2026-04-26 16:34:03,012 [   4535]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@19369a48
+2026-04-26 16:34:03,021 [   4544]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@57accc84
+2026-04-26 16:34:03,021 [   4544]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=4): DelayedPushProperties
+2026-04-26 16:34:03,021 [   4544]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:03,022 [   4545]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of combined valid expression with negation produces no warning. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:03,023 [   4546]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=4): CreatingIterators
+2026-04-26 16:34:03,024 [   4547]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=4): CollectingIndexableFiles
+2026-04-26 16:34:03,024 [   4547]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@53925cd8
+2026-04-26 16:34:03,024 [   4547]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of combined valid expression with negation produces no warning uses 16 scanning threads
+2026-04-26 16:34:03,033 [   4556]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:03,033 [   4556]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@53925cd8, successful: true
+2026-04-26 16:34:03,034 [   4557]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for combined valid expression with negation produces no warning. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:03,035 [   4558]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for combined valid expression with negation produces no warning. No files to index with loading content.
+2026-04-26 16:34:03,035 [   4558]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=4): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@57accc84
+2026-04-26 16:34:03,035 [   4558]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@19369a48, successful: true
+2026-04-26 16:34:03,035 [   4558]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@19369a48
+2026-04-26 16:34:03,178 [   4701]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@462546d6
+2026-04-26 16:34:03,178 [   4701]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@462546d6
+2026-04-26 16:34:03,215 [   4738]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@63c88232
+2026-04-26 16:34:03,215 [   4738]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=5): DelayedPushProperties
+2026-04-26 16:34:03,216 [   4739]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:03,217 [   4740]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of aspect with Component annotation produces no warning. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:03,217 [   4740]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=5): CreatingIterators
+2026-04-26 16:34:03,219 [   4742]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=5): CollectingIndexableFiles
+2026-04-26 16:34:03,219 [   4742]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@25996f76
+2026-04-26 16:34:03,219 [   4742]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of aspect with Component annotation produces no warning uses 16 scanning threads
+2026-04-26 16:34:03,225 [   4748]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:03,225 [   4748]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@25996f76, successful: true
+2026-04-26 16:34:03,225 [   4748]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for aspect with Component annotation produces no warning. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:03,227 [   4750]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for aspect with Component annotation produces no warning. No files to index with loading content.
+2026-04-26 16:34:03,227 [   4750]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=5): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@63c88232
+2026-04-26 16:34:03,227 [   4750]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@462546d6, successful: true
+2026-04-26 16:34:03,227 [   4750]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@462546d6
+2026-04-26 16:34:03,344 [   4867]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@51de9236
+2026-04-26 16:34:03,344 [   4867]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@51de9236
+2026-04-26 16:34:03,354 [   4877]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@1c29e68d
+2026-04-26 16:34:03,354 [   4877]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=6): DelayedPushProperties
+2026-04-26 16:34:03,355 [   4878]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:03,356 [   4879]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of valid pointcut expression produces no warning. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:03,356 [   4879]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=6): CreatingIterators
+2026-04-26 16:34:03,357 [   4880]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=6): CollectingIndexableFiles
+2026-04-26 16:34:03,357 [   4880]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@7f7849f5
+2026-04-26 16:34:03,357 [   4880]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of valid pointcut expression produces no warning uses 16 scanning threads
+2026-04-26 16:34:03,362 [   4885]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:03,362 [   4885]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@7f7849f5, successful: true
+2026-04-26 16:34:03,362 [   4885]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for valid pointcut expression produces no warning. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:03,363 [   4886]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for valid pointcut expression produces no warning. No files to index with loading content.
+2026-04-26 16:34:03,363 [   4886]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=6): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@1c29e68d
+2026-04-26 16:34:03,363 [   4886]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@51de9236, successful: true
+2026-04-26 16:34:03,363 [   4886]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@51de9236
+2026-04-26 16:34:03,467 [   4990]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@4ddcf7ba
+2026-04-26 16:34:03,467 [   4990]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=true for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@4ddcf7ba
+2026-04-26 16:34:03,469 [   4992]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Running task: com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@3d0e827d
+2026-04-26 16:34:03,469 [   4992]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=7): DelayedPushProperties
+2026-04-26 16:34:03,470 [   4993]   INFO - #c.i.u.i.FileBasedIndexImpl - Indexes are already loaded
+2026-04-26 16:34:03,471 [   4994]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Started scanning for indexing of aspect with Service annotation produces no warning. Reason: Reindex requested by project root model changes
+2026-04-26 16:34:03,471 [   4994]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=7): CreatingIterators
+2026-04-26 16:34:03,473 [   4996]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] scanning stage (scanning id=7): CollectingIndexableFiles
+2026-04-26 16:34:03,473 [   4996]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Register issued token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@6b244a99
+2026-04-26 16:34:03,473 [   4996]   INFO - #c.i.u.i.UnindexedFilesScanner - Scanning of aspect with Service annotation produces no warning uses 16 scanning threads
+2026-04-26 16:34:03,477 [   5000]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.RequestFullHeavyScanningToken@50fee09e, successful: true
+2026-04-26 16:34:03,477 [   5000]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.WriteOnlyScanningRequestTokenImpl@6b244a99, successful: true
+2026-04-26 16:34:03,478 [   5001]   INFO - #c.i.u.i.UnindexedFilesScanner - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Scanning completed for aspect with Service annotation produces no warning. Number of scanned files: 208; number of files for indexing: 0
+2026-04-26 16:34:03,478 [   5001]   INFO - #c.i.u.i.PerProjectIndexingQueue - Finished for aspect with Service annotation produces no warning. No files to index with loading content.
+2026-04-26 16:34:03,478 [   5001]   INFO - #c.i.o.p.UnindexedFilesScannerExecutor - [light_temp_3Cto4wEtuOOyKXkFha0EwlGdqmdc4987708] Task finished (scanning id=7): com.intellij.util.indexing.UnindexedFilesScannerExecutorImpl$ScheduledScanningTask@3d0e827d
+2026-04-26 16:34:03,479 [   5002]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Complete token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@4ddcf7ba, successful: true
+2026-04-26 16:34:03,479 [   5002]   INFO - #c.i.u.i.d.ProjectIndexingDependenciesService - Write incomplete scanning mark=false for token: com.intellij.util.indexing.dependencies.IncompleteTaskToken@4ddcf7ba

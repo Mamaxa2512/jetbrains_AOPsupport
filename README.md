@@ -1,7 +1,7 @@
 # AOP Support Plugin for IntelliJ IDEA
 
 [![Version](https://img.shields.io/badge/version-1.1.0--beta.1-blue.svg)](CHANGELOG.md)
-[![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2024.3-orange.svg)](https://www.jetbrains.com/idea/)
+[![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2025.1-orange.svg)](https://www.jetbrains.com/idea/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Плагін для IntelliJ IDEA, який покращує розробку з Spring AOP та AspectJ, надаючи підтримку редактора, навігацію та інспекції коду.
@@ -62,7 +62,7 @@
 4. Перезапустіть IDE
 
 ### Вимоги
-- IntelliJ IDEA Community або Ultimate 2024.3 (build 243.x)
+- IntelliJ IDEA Community або Ultimate 2025.1 (build 251.x)
 - Java 8+ проекти
 - Spring Framework або AspectJ залежності в проекті
 
@@ -227,7 +227,7 @@ src/
 
 - **Мова**: Kotlin
 - **Build**: Gradle 8.x
-- **Platform**: IntelliJ Platform SDK 2024.3
+- **Platform**: IntelliJ Platform SDK 2025.1
 - **Testing**: JUnit 5 + IntelliJ Platform Test Framework
 
 ## 📄 Ліцензія

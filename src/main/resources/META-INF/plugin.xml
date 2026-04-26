@@ -55,7 +55,27 @@
             language="JAVA"
             implementationClass="org.example.aop.completion.AopCompletionContributor"/>
 
+        <!-- AI intentions -->
+        <intentionAction>
+            <className>org.example.aop.ai.intentions.ExplainPointcutIntention</className>
+            <category>AOP</category>
+        </intentionAction>
+        <intentionAction>
+            <className>org.example.aop.ai.intentions.OptimizePointcutIntention</className>
+            <category>AOP</category>
+        </intentionAction>
+
         <!-- Phase 4: tool window -->
         <!-- <toolWindow ... /> -->
     </extensions>
+
+    <actions>
+        <action
+            id="org.example.aop.ai.actions.GeneratePointcutAction"
+            class="org.example.aop.ai.actions.GeneratePointcutAction"
+            text="Generate Pointcut with AI"
+            description="Generate pointcut expression from natural language description">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>

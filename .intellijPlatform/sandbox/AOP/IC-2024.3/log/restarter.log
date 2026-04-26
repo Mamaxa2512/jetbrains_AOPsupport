@@ -1,5 +1,0 @@
-============= 2026-04-26 10:25:41.767171931 UTC
-    0 [info ] args: ["/home/anonim/.gradle/caches/9.3.0/transforms/d98a087e034dc7b3966881e048c23ca3/transformed/ideaIC-2024.3/bin/restarter", "308854", "1", "/home/anonim/.gradle/caches/9.3.0/transforms/d98a087e034dc7b3966881e048c23ca3/transformed/ideaIC-2024.3/bin/idea.sh"]
-    0 [info ] CWD: Ok("/home/anonim")
-    0 [info ] waiting for 308854
-  500 [info ] exec-ing: ["/home/anonim/.gradle/caches/9.3.0/transforms/d98a087e034dc7b3966881e048c23ca3/transformed/ideaIC-2024.3/bin/idea.sh"]

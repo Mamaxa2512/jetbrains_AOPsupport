@@ -4,10 +4,10 @@
 
 | IDE Version | Build Number | Status | Notes |
 |---|---|---|---|
-| IntelliJ IDEA Community 2024.3 | IC-243.x | Primary baseline | Used in `build.gradle.kts` and CI |
-| IntelliJ IDEA Ultimate 2024.3 | IU-243.x | Expected compatible | Same platform, no Ultimate-only APIs used |
-| IntelliJ IDEA Community 2024.2 | IC-242.x | Not validated | May work; not in verifier scope |
-| IntelliJ IDEA Community 2025.x | IC-251.x+ | Not validated | Tracked for future compatibility pass |
+| IntelliJ IDEA Community 2025.1 | IC-251.x | Primary baseline | Used in `build.gradle.kts` and CI |
+| IntelliJ IDEA Ultimate 2025.1 | IU-251.x | Expected compatible | Same platform, no Ultimate-only APIs used |
+| IntelliJ IDEA Community 2024.3 | IC-243.x | Legacy baseline | Previously used, not current target |
+| IntelliJ IDEA Community 2025.2+ | IC-252.x+ | Not validated | Planned for next compatibility pass |
 
 ## Java Language Level
 

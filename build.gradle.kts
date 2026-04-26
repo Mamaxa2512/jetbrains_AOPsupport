@@ -39,7 +39,7 @@ dependencies {
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
 
     intellijPlatform {
-        intellijIdeaCommunity("2024.3")
+        intellijIdeaCommunity("2025.1")
         bundledPlugin("com.intellij.java")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
     }
