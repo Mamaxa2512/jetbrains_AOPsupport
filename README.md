@@ -1,6 +1,6 @@
 # AOP Support Plugin for IntelliJ IDEA
 
-[![Version](https://img.shields.io/badge/version-1.0.0--beta.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.1.0--beta.1-blue.svg)](CHANGELOG.md)
 [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2024.3-orange.svg)](https://www.jetbrains.com/idea/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -34,19 +34,29 @@
 - Quick fix: автоматично додає `@Component` анотацію
 - Розпізнає всі Spring stereotype анотації та мета-анотації
 
-**PointcutSyntax**
-- Валідація синтаксису pointcut виразів
+**PointcutSyntax** ⭐ НОВЕ в 1.1.0
+- **Детальна валідація синтаксису** pointcut виразів
+- Перевіряє структуру кожного designator:
+  - `execution()` - валідація method signatures, return types, parameters
+  - `within()` - валідація type patterns
+  - `@annotation()`, `@within()`, `@target()` - валідація annotation types
+  - `bean()` - валідація bean name patterns
+  - `args()`, `@args()` - валідація parameter patterns
+- **Performance warnings** для занадто широких patterns:
+  - `execution(* *(..))` - Warning: matches ALL methods
+  - `within(..*)` - Warning: matches ALL types
 - Виявляє помилки:
   - Порожні вирази
   - Незбалансовані дужки
   - Невідомі designators
   - Некоректні логічні оператори
   - Відсутні оператори між виразами
+  - Невалідні type/method/parameter patterns
 
 ## 📦 Встановлення
 
 ### З файлу
-1. Завантажте `AOP-1.0.0-beta.1.zip` з [releases](../../releases)
+1. Завантажте `AOP-1.1.0-beta.1.zip` з [releases](../../releases)
 2. В IntelliJ IDEA: `Settings` → `Plugins` → `⚙️` → `Install Plugin from Disk...`
 3. Виберіть завантажений ZIP файл
 4. Перезапустіть IDE
@@ -162,8 +172,8 @@ public class LoggingAspect {
 - ✨ Feature Request
 - ⚠️ False Positive/Negative
 
-Включіть:
-- Версію плагіна (1.0.0-beta.1)
+### Включіть:
+- Версію плагіна (1.1.0-beta.1)
 - Версію IntelliJ IDEA
 - Кроки для відтворення
 - Приклад коду (якщо можливо)
@@ -193,7 +203,7 @@ public class LoggingAspect {
 ./gradlew verifyPlugin
 ```
 
-Артефакт: `build/distributions/AOP-1.0.0-beta.1.zip`
+Артефакт: `build/distributions/AOP-1.1.0-beta.1.zip`
 
 ### Структура проекту
 
@@ -230,8 +240,33 @@ src/
 
 ---
 
-**Версія**: 1.0.0-beta.1  
+**Версія**: 1.1.0-beta.1  
 **Дата релізу**: 2026-04-26  
 **Статус**: Internal Beta Testing
+
+## 🆕 Що нового в 1.1.0
+
+### Детальний синтаксичний аналіз pointcut виразів
+
+Плагін тепер включає покращений парсер, який детально аналізує структуру кожного pointcut designator:
+
+- ✅ Валідація `execution()` patterns - перевіряє return types, method names, parameters
+- ✅ Валідація `within()` type patterns
+- ✅ Валідація annotation types в `@annotation()`, `@within()`, `@target()`
+- ✅ Валідація bean name patterns в `bean()`
+- ✅ Валідація parameter patterns в `args()` та `@args()`
+- ⚠️ Performance warnings для занадто широких patterns
+
+**Приклад:**
+```java
+// ⚠️ Warning
+@Before("execution(* *(..))")
+// Warning: execution(* *(..)) matches ALL methods - this may cause performance issues
+
+// ✅ Краще
+@Before("execution(* com.example.service.*.*(..))")
+```
+
+Детальніше: [`docs/advanced-pointcut-analysis.md`](docs/advanced-pointcut-analysis.md)
 
 Дякуємо за тестування AOP Support плагіна! 🚀

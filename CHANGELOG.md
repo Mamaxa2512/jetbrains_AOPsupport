@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0-beta.1] - 2026-04-26
+
+### Added
+- **Детальний синтаксичний аналіз pointcut виразів** (`PointcutParser`)
+  - Валідація структури `execution()` patterns (return type, declaring type, method name, parameters)
+  - Валідація `within()` type patterns
+  - Валідація `@annotation()`, `@within()`, `@target()` annotation types
+  - Валідація `bean()` name patterns
+  - Валідація `args()` та `@args()` parameter patterns
+  - Валідація `this()` та `target()` type references
+  - Перевірка wildcards (`*`, `..`) у всіх контекстах
+  - Детальні повідомлення про помилки з вказанням типу проблеми
+
+### Improved
+- **PointcutSyntax інспекція** тепер використовує детальний парсер
+  - Показує як errors (червоні), так і warnings (жовті)
+  - Performance warnings для занадто широких patterns (`execution(* *(..))`, `within(..*)`)
+  - Більш специфічні повідомлення про помилки (Invalid return type, Invalid method pattern, тощо)
+
+### Added (Tests)
+- 30+ нових тестів для `PointcutParser`
+- Покриття всіх designators
+- Тести для edge cases та складних виразів
+
+### Documentation
+- Додано `docs/advanced-pointcut-analysis.md` з детальним описом нового аналізу
+- Приклади валідних/невалідних pointcut виразів
+- Best practices для написання pointcuts
+
+### Internal
+- Загальна кількість тестів: 81 (51 старих + 30 нових)
+- Всі тести проходять успішно
+
 ## [1.0.0-beta.1] - 2026-04-26
 
 ### Added
@@ -41,5 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI pipeline with build, static checks, and plugin verifier
 - Compatibility matrix documented
 
-[Unreleased]: https://github.com/anonim/aop-support/compare/v1.0.0-beta.1...HEAD
+[Unreleased]: https://github.com/anonim/aop-support/compare/v1.1.0-beta.1...HEAD
+[1.1.0-beta.1]: https://github.com/anonim/aop-support/releases/tag/v1.1.0-beta.1
 [1.0.0-beta.1]: https://github.com/anonim/aop-support/releases/tag/v1.0.0-beta.1

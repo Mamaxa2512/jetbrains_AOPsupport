@@ -29,9 +29,28 @@ class PointcutSyntaxInspection : AbstractBaseJavaLocalInspectionTool() {
     }
 
     private fun validate(expression: String, element: PsiElement, holder: ProblemsHolder) {
-        val error = AopInspectionRules.validatePointcutExpression(expression)
-        if (error != null) {
-            holder.registerProblem(element, error)
+        // Спочатку базова валідація
+        val basicError = AopInspectionRules.validatePointcutExpression(expression)
+        if (basicError != null) {
+            holder.registerProblem(element, basicError)
+            return
+        }
+
+        // Потім детальний синтаксичний аналіз
+        val parseResult = PointcutParser.parse(expression)
+        
+        // Реєструємо помилки
+        for (error in parseResult.errors) {
+            holder.registerProblem(element, error.message)
+        }
+        
+        // Реєструємо попередження (як weak warnings)
+        for (warning in parseResult.warnings) {
+            holder.registerProblem(
+                element,
+                warning.message,
+                com.intellij.codeInspection.ProblemHighlightType.WEAK_WARNING
+            )
         }
     }
 }
