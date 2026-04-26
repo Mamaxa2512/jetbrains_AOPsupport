@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.example"
-version = "1.0.0"
+version = "1.0.0-beta.1"
 
 repositories {
     mavenCentral()
@@ -36,6 +36,7 @@ tasks.named("ktlintTestSourceSetCheck") {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("junit:junit:4.13.2")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.10.1")
 
     intellijPlatform {
         intellijIdeaCommunity("2024.3")

@@ -50,6 +50,15 @@ Acceptance criteria:
 - Navigation markers are stable and not noisy
 - Highlighting is consistent across supported annotations
 
+## Phase 4 Implementation Status (2026-04-26)
+- Status: completed
+- Fixture-based inspection tests implemented using IntelliJ `BasePlatformTestCase` with inline stub annotations in: `src/test/kotlin/org/example/aop/inspection/AopInspectionFixtureTest.kt`
+- 8 fixture tests cover: valid/invalid pointcut expressions, unknown designator, trailing operator, empty expression, aspect-not-bean, aspect-with-Service — all green
+- Added `junit-vintage-engine` to `build.gradle.kts` to run JUnit3-style platform tests under JUnit5 launcher
+- Compatibility matrix documented in: `docs/compatibility-matrix.md`
+- Fixture stub files added in: `src/test/resources/fixtures/inspection/`
+- All 51 tests green via `./gradlew test`
+
 ### Phase 4 - Test Coverage and Compatibility (P1, Weeks 9-10)
 Goals:
 - Add regression protection before beta rollout
@@ -63,6 +72,18 @@ Acceptance criteria:
 - Core features have automated regression tests
 - Tests pass in CI for selected IDE baselines
 - Known limitations documented
+
+## Phase 5 Implementation Status (2026-04-26)
+- Status: completed
+- Version bumped to `1.0.0-beta.1` in `build.gradle.kts`
+- Changelog created in: `CHANGELOG.md`
+- Release notes created in: `docs/release-notes-beta-1.md`
+- Issue templates created in: `.github/ISSUE_TEMPLATE/` (bug report, feature request, false positive)
+- Triage flow documented in: `docs/issue-triage-flow.md`
+- Beta build instructions documented in: `docs/beta-build-instructions.md`
+- Build artifact generated successfully: `build/distributions/AOP-1.0.0-beta.1.zip` (39KB)
+- Release checklist updated with completed items in: `docs/release-checklist.md`
+- Smoke testing checklist provided in `docs/smoke-test-guide.md` (manual execution by beta testers)
 
 ### Phase 5 - Beta Release Preparation (P0, Weeks 11-12)
 Goals:

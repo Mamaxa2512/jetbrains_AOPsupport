@@ -1,0 +1,8 @@
+/Header Record For PersistentHashMapValueStoragegroovy.astbuildergroovy.dateutilgroovy.datetime
+groovy.antgroovy.groovydoc
+groovy.niogroovy.templatesgroovy.json
+groovy.sqlgroovy.testgradle.installation.beacon
+groovy.xmlgradle.kotlin.dsl.extensions# gradle.kotlin.dsl.shared.runtime# gradle.kotlin.dsl.tooling.modelsgroovy.consolejavaparser.coregradle.kotlin.dslkotlin.stdlibapiguardian.apiapiguardian.apigradle.core.apijunit.jupiter.apijunit.jupiter.enginekotlin.reflectjunit.jupiter
+opentest4jjunit.platform.commonsjunit.platform.engine
+opentest4jjunit.jupiter.paramsgradle.core	groovy
+gradle.api

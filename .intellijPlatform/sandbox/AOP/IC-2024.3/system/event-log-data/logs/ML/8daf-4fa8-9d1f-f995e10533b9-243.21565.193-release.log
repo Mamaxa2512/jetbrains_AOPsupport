@@ -1,0 +1,2 @@
+{"recorder_version":"1","session":"26042609-7939017bf5b3","build":"243.21565.193","bucket":"86","time":1777196191111,"group":{"id":"ml.event.log","version":"1"},"event":{"count":1,"data":{"system_event_id":0,"version":"7087.0","created":1777196191112},"id":"metadata.updated"}}
+{"recorder_version":"1","session":"26042609-7939017bf5b3","build":"243.21565.193","bucket":"86","time":1777196242300,"group":{"id":"ml.event.log","version":"1"},"event":{"count":1,"data":{"created":1777196242300,"system_event_id":1},"id":"registered"}}
