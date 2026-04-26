@@ -1,0 +1,18 @@
+<html lang="en">
+<body>
+Reports <code>@Aspect</code> classes that are not registered as Spring Beans.
+<p>
+For Spring AOP to apply the aspect, the class must be a Spring-managed bean
+(annotated with <code>@Component</code>, <code>@Service</code>, <code>@Repository</code>, etc.,
+including custom meta-annotations built on top of those stereotypes).
+Without a bean annotation, Spring will not detect or apply the aspect at runtime.
+</p>
+<p><b>Quick fix:</b> Adds <code>@Component</code> only when no Spring bean stereotype is present.</p>
+<ul>
+	<li>Idempotent: does not add duplicate stereotype annotations.</li>
+	<li>Safe: does not modify the class when it is already recognized as a bean.</li>
+	<li>Non-destructive: only appends the missing stereotype annotation.</li>
+</ul>
+<p><b>Note:</b> This warning does not apply to standalone AspectJ (compile-time weaving).</p>
+</body>
+</html>

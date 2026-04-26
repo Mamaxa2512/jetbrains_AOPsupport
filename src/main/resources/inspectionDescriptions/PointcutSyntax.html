@@ -1,0 +1,18 @@
+<html lang="en">
+<body>
+Reports invalid pointcut expression syntax in AOP advice and <code>@Pointcut</code> annotations.
+<p>Checks for:</p>
+<ul>
+    <li>Empty pointcut expressions</li>
+    <li>Expressions that contain only negation operators</li>
+    <li>Unbalanced parentheses</li>
+    <li>Leading or trailing logical operators (<code>&amp;&amp;</code>, <code>||</code>)</li>
+    <li>Consecutive logical operators (for example <code>&amp;&amp; ||</code>)</li>
+    <li>Missing logical operator between pointcut clauses</li>
+    <li>Unknown pointcut designators (e.g., typos like <code>exectuion</code> instead of <code>execution</code>)</li>
+</ul>
+<p>Valid designators: <code>execution</code>, <code>within</code>, <code>this</code>, <code>target</code>,
+<code>args</code>, <code>@annotation</code>, <code>@within</code>, <code>@target</code>,
+<code>@args</code>, <code>bean</code>, and other supported AspectJ designators.</p>
+</body>
+</html>

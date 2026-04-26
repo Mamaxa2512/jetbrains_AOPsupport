@@ -1,0 +1,61 @@
+<idea-plugin>
+    <id>io.github.anonim.aop-support</id>
+    <name>AOP Support</name>
+    <vendor>org.example</vendor>
+    <description><![CDATA[
+        AOP support for Spring AOP and AspectJ in Java projects.<br><br>
+        Підтримка AOP (Aspect-Oriented Programming) для Spring AOP та AspectJ.<br><br>
+        Функції:
+        <ul>
+            <li>Іконки на полях редактора (gutter icons) для аспектів та перехоплених методів</li>
+            <li>Підсвічування AOP-анотацій (@Aspect, @Before, @After, @Around, @Pointcut)</li>
+            <li>Навігація між аспектами та цільовими методами</li>
+            <li>Інспекції для виявлення помилок у конфігурації AOP</li>
+        </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Plugin startup -->
+        <projectActivity implementation="org.example.aop.AopPlugin"/>
+
+        <!-- Phase 2: gutter icons -->
+        <codeInsight.lineMarkerProvider
+            language="JAVA"
+            implementationClass="org.example.aop.marker.AopLineMarkerProvider"/>
+
+        <!-- Phase 2: AOP annotation highlighting -->
+        <annotator
+            language="JAVA"
+            implementationClass="org.example.aop.annotator.AopAnnotator"/>
+
+        <!-- Phase 3: inspections -->
+        <localInspection
+            language="JAVA"
+            shortName="AspectNotBean"
+            displayName="@Aspect class is not a Spring Bean"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.AspectNotBeanInspection"/>
+
+        <localInspection
+            language="JAVA"
+            shortName="PointcutSyntax"
+            displayName="Invalid pointcut expression syntax"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.PointcutSyntaxInspection"/>
+
+        <!-- Phase 3: code completion -->
+        <completion.contributor
+            language="JAVA"
+            implementationClass="org.example.aop.completion.AopCompletionContributor"/>
+
+        <!-- Phase 4: tool window -->
+        <!-- <toolWindow ... /> -->
+    </extensions>
+</idea-plugin>
