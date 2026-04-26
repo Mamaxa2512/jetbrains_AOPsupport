@@ -45,6 +45,38 @@ class AopInspectionFixtureTest : BasePlatformTestCase() {
         )
     }
 
+    /** Adds minimal Kotlin annotation stubs for Kotlin source tests. */
+    private fun addKotlinAopStubs() {
+        myFixture.addFileToProject(
+            "org/aspectj/lang/annotation/Aspect.kt",
+            "package org.aspectj.lang.annotation\nannotation class Aspect"
+        )
+        myFixture.addFileToProject(
+            "org/aspectj/lang/annotation/Before.kt",
+            "package org.aspectj.lang.annotation\nannotation class Before(val value: String = \"\")"
+        )
+        myFixture.addFileToProject(
+            "org/aspectj/lang/annotation/After.kt",
+            "package org.aspectj.lang.annotation\nannotation class After(val value: String = \"\")"
+        )
+        myFixture.addFileToProject(
+            "org/aspectj/lang/annotation/Around.kt",
+            "package org.aspectj.lang.annotation\nannotation class Around(val value: String = \"\")"
+        )
+        myFixture.addFileToProject(
+            "org/aspectj/lang/annotation/Pointcut.kt",
+            "package org.aspectj.lang.annotation\nannotation class Pointcut(val value: String = \"\")"
+        )
+        myFixture.addFileToProject(
+            "org/springframework/stereotype/Component.kt",
+            "package org.springframework.stereotype\nannotation class Component"
+        )
+        myFixture.addFileToProject(
+            "org/springframework/stereotype/Service.kt",
+            "package org.springframework.stereotype\nannotation class Service"
+        )
+    }
+
     // ── PointcutSyntaxInspection ──────────────────────────────────────────────
 
     fun `test valid pointcut expression produces no warning`() {
@@ -191,6 +223,82 @@ class AopInspectionFixtureTest : BasePlatformTestCase() {
             import org.springframework.stereotype.Service;
             @Aspect @Service
             class ServiceAspect {}
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    // ── Kotlin inspections ────────────────────────────────────────────────────
+
+    fun `test kotlin pointcut trailing operator is flagged`() {
+        addKotlinAopStubs()
+        myFixture.enableInspections(KotlinPointcutSyntaxInspection())
+        myFixture.configureByText(
+            "KotlinTrailingPointcut.kt",
+            """
+            import org.aspectj.lang.annotation.Aspect
+            import org.aspectj.lang.annotation.Before
+            import org.springframework.stereotype.Component
+            
+            @Aspect
+            @Component
+            class KotlinTrailingPointcut {
+                @Before(<warning descr="Pointcut expression cannot end with a logical operator">"execution(* *(..)) ||"</warning>)
+                fun advice() {}
+            }
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    fun `test kotlin pointcut unknown designator is flagged`() {
+        addKotlinAopStubs()
+        myFixture.enableInspections(KotlinPointcutSyntaxInspection())
+        myFixture.configureByText(
+            "KotlinUnknownDesignator.kt",
+            """
+            import org.aspectj.lang.annotation.Aspect
+            import org.aspectj.lang.annotation.Before
+            import org.springframework.stereotype.Component
+            
+            @Aspect
+            @Component
+            class KotlinUnknownDesignator {
+                @Before(<warning descr="Unknown pointcut designator: 'unknown'">"unknown(* *(..))"</warning>)
+                fun advice() {}
+            }
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    fun `test kotlin aspect without spring bean is flagged`() {
+        addKotlinAopStubs()
+        myFixture.enableInspections(KotlinAspectNotBeanInspection())
+        myFixture.configureByText(
+            "BareKotlinAspect.kt",
+            """
+            import org.aspectj.lang.annotation.Aspect
+            
+            <warning descr="@Aspect class 'BareKotlinAspect' is not a Spring Bean — Spring AOP will not apply it">@Aspect</warning>
+            class BareKotlinAspect
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    fun `test kotlin aspect with service annotation produces no warning`() {
+        addKotlinAopStubs()
+        myFixture.enableInspections(KotlinAspectNotBeanInspection())
+        myFixture.configureByText(
+            "ServiceKotlinAspect.kt",
+            """
+            import org.aspectj.lang.annotation.Aspect
+            import org.springframework.stereotype.Service
+            
+            @Aspect
+            @Service
+            class ServiceKotlinAspect
             """.trimIndent()
         )
         myFixture.checkHighlighting(false, false, false)

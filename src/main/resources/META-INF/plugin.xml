@@ -16,6 +16,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Plugin startup -->
@@ -30,6 +31,9 @@
         <annotator
             language="JAVA"
             implementationClass="org.example.aop.annotator.AopAnnotator"/>
+        <annotator
+            language="kotlin"
+            implementationClass="org.example.aop.annotator.AopAnnotator"/>
 
         <!-- Phase 3: inspections -->
         <localInspection
@@ -40,6 +44,14 @@
             enabledByDefault="true"
             level="WARNING"
             implementationClass="org.example.aop.inspection.AspectNotBeanInspection"/>
+        <localInspection
+            language="kotlin"
+            shortName="KotlinAspectNotBean"
+            displayName="@Aspect class is not a Spring Bean"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.KotlinAspectNotBeanInspection"/>
 
         <localInspection
             language="JAVA"
@@ -49,10 +61,21 @@
             enabledByDefault="true"
             level="WARNING"
             implementationClass="org.example.aop.inspection.PointcutSyntaxInspection"/>
+        <localInspection
+            language="kotlin"
+            shortName="KotlinPointcutSyntax"
+            displayName="Invalid pointcut expression syntax"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.KotlinPointcutSyntaxInspection"/>
 
         <!-- Phase 3: code completion -->
         <completion.contributor
             language="JAVA"
+            implementationClass="org.example.aop.completion.AopCompletionContributor"/>
+        <completion.contributor
+            language="kotlin"
             implementationClass="org.example.aop.completion.AopCompletionContributor"/>
 
         <!-- AI intentions -->

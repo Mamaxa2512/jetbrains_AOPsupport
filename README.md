@@ -105,6 +105,7 @@ public class LoggingAspect {
 | Функція | Статус |
 |---------|--------|
 | Java файли | ✅ Повна підтримка |
+| Kotlin файли | ✅ Базова підтримка (інспекції, підсвічування, completion) |
 | Spring AOP | ✅ Основний фокус |
 | AspectJ анотації | ✅ Підмножина |
 | Gutter навігація | ✅ |
@@ -152,7 +153,7 @@ public class LoggingAspect {
 
 ## 🐛 Відомі обмеження
 
-- **Тільки Java**: Kotlin файли не інспектуються в цій beta версії
+- **Kotlin**: підтримуються базові editor-функції для анотаційних pointcut-виразів; розширений cross-file аналіз поки що обмежений
 - **Без XML**: XML-конфігурація Spring AOP не підтримується
 - **Без cross-file аналізу**: Використання pointcut між файлами не відстежується
 - **AspectJ weaving**: Повні можливості compile-time weaving поза scope

@@ -12,6 +12,8 @@ class AopCompletionContextTest {
     fun `supports aop advice and pointcut annotations`() {
         assertTrue(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Before"))
         assertTrue(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Pointcut"))
+        assertTrue(AopCompletionContext.isSupportedAopAnnotation("Before"))
+        assertTrue(AopCompletionContext.isSupportedAopAnnotation("Pointcut"))
         assertFalse(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Aspect"))
         assertFalse(AopCompletionContext.isSupportedAopAnnotation("com.example.Other"))
     }

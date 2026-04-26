@@ -7,6 +7,10 @@ import com.intellij.psi.*
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.ProcessingContext
 import org.example.aop.inspection.AopInspectionRules
+import org.jetbrains.kotlin.psi.KtAnnotationEntry
+import org.jetbrains.kotlin.psi.KtLiteralStringTemplateEntry
+import org.jetbrains.kotlin.psi.KtStringTemplateExpression
+import org.jetbrains.kotlin.psi.KtValueArgument
 
 class AopCompletionContributor : CompletionContributor() {
 
@@ -15,6 +19,12 @@ class AopCompletionContributor : CompletionContributor() {
             CompletionType.BASIC,
             PlatformPatterns.psiElement(PsiJavaToken::class.java)
                 .withParent(PsiLiteralExpression::class.java),
+            AopPointcutCompletionProvider()
+        )
+        extend(
+            CompletionType.BASIC,
+            PlatformPatterns.psiElement(KtLiteralStringTemplateEntry::class.java)
+                .withParent(KtStringTemplateExpression::class.java),
             AopPointcutCompletionProvider()
         )
     }
@@ -28,11 +38,17 @@ private class AopPointcutCompletionProvider : CompletionProvider<CompletionParam
         result: CompletionResultSet
     ) {
         val position = parameters.position
-        val annotation = PsiTreeUtil.getParentOfType(position, PsiAnnotation::class.java) ?: return
-        if (!AopCompletionContext.isSupportedAopAnnotation(annotation.qualifiedName)) return
+        val javaAnnotation = PsiTreeUtil.getParentOfType(position, PsiAnnotation::class.java)
+        val kotlinAnnotation = PsiTreeUtil.getParentOfType(position, KtAnnotationEntry::class.java)
+        val qualifiedName = javaAnnotation?.qualifiedName ?: kotlinAnnotation?.typeReference?.text
+        if (!AopCompletionContext.isSupportedAopAnnotation(qualifiedName)) return
 
-        val nameValuePair = PsiTreeUtil.getParentOfType(position, PsiNameValuePair::class.java)
-        if (!AopCompletionContext.isSupportedPointcutAttribute(nameValuePair?.name)) return
+        val javaAttributeName = PsiTreeUtil.getParentOfType(position, PsiNameValuePair::class.java)?.name
+        val kotlinAttributeName = PsiTreeUtil.getParentOfType(position, KtValueArgument::class.java)
+            ?.getArgumentName()
+            ?.asName
+            ?.identifier
+        if (!AopCompletionContext.isSupportedPointcutAttribute(javaAttributeName ?: kotlinAttributeName)) return
 
         // Extract the typed prefix from inside the string literal
         val prefix = AopCompletionContext.extractPrefix(position.text)
@@ -106,7 +122,9 @@ internal object AopCompletionContext {
     )
 
     fun isSupportedAopAnnotation(qualifiedName: String?): Boolean {
-        return qualifiedName in AopInspectionRules.adviceAndPointcutAnnotations
+        val value = qualifiedName ?: return false
+        return value in AopInspectionRules.adviceAndPointcutAnnotations ||
+            value in AopInspectionRules.aopAnnotationShortNames
     }
 
     @Deprecated("Use isSupportedAopAnnotation", ReplaceWith("isSupportedAopAnnotation(qualifiedName)"))

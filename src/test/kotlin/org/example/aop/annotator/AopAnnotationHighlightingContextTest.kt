@@ -37,6 +37,16 @@ class AopAnnotationHighlightingContextTest {
     }
 
     @Test
+    fun `highlights kotlin short annotation names`() {
+        assertTrue(
+            AopAnnotationHighlightingContext.shouldHighlightAopAnnotation(
+                referenceName = "Before",
+                qualifiedName = "Before"
+            )
+        )
+    }
+
+    @Test
     fun `does not highlight when package is not supported`() {
         assertFalse(
             AopAnnotationHighlightingContext.shouldHighlightAopAnnotation(
