@@ -9,10 +9,11 @@ import kotlin.test.assertTrue
 class AopCompletionContextTest {
 
     @Test
-    fun `supports only aop advice annotations`() {
-        assertTrue(AopCompletionContext.isSupportedAopAdviceAnnotation("org.aspectj.lang.annotation.Before"))
-        assertFalse(AopCompletionContext.isSupportedAopAdviceAnnotation("org.aspectj.lang.annotation.Aspect"))
-        assertFalse(AopCompletionContext.isSupportedAopAdviceAnnotation("com.example.Other"))
+    fun `supports aop advice and pointcut annotations`() {
+        assertTrue(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Before"))
+        assertTrue(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Pointcut"))
+        assertFalse(AopCompletionContext.isSupportedAopAnnotation("org.aspectj.lang.annotation.Aspect"))
+        assertFalse(AopCompletionContext.isSupportedAopAnnotation("com.example.Other"))
     }
 
     @Test

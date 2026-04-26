@@ -17,6 +17,26 @@ class AopAnnotationHighlightingContextTest {
     }
 
     @Test
+    fun `highlights Aspect annotation`() {
+        assertTrue(
+            AopAnnotationHighlightingContext.shouldHighlightAopAnnotation(
+                referenceName = "Aspect",
+                qualifiedName = "org.aspectj.lang.annotation.Aspect"
+            )
+        )
+    }
+
+    @Test
+    fun `highlights Pointcut annotation`() {
+        assertTrue(
+            AopAnnotationHighlightingContext.shouldHighlightAopAnnotation(
+                referenceName = "Pointcut",
+                qualifiedName = "org.aspectj.lang.annotation.Pointcut"
+            )
+        )
+    }
+
+    @Test
     fun `does not highlight when package is not supported`() {
         assertFalse(
             AopAnnotationHighlightingContext.shouldHighlightAopAnnotation(

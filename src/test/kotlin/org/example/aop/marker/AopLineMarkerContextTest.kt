@@ -17,6 +17,19 @@ class AopLineMarkerContextTest {
     }
 
     @Test
+    fun `detects all advice annotation types`() {
+        listOf(
+            "org.aspectj.lang.annotation.Before",
+            "org.aspectj.lang.annotation.After",
+            "org.aspectj.lang.annotation.Around",
+            "org.aspectj.lang.annotation.AfterReturning",
+            "org.aspectj.lang.annotation.AfterThrowing"
+        ).forEach { annotation ->
+            assertTrue(AopLineMarkerContext.hasAdviceAnnotation(setOf(annotation)), "Expected $annotation to be detected")
+        }
+    }
+
+    @Test
     fun `returns advice annotations in preferred stable order`() {
         val annotations = setOf(
             "org.aspectj.lang.annotation.AfterThrowing",

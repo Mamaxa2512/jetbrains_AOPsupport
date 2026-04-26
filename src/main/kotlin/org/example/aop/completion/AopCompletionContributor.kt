@@ -29,7 +29,7 @@ private class AopPointcutCompletionProvider : CompletionProvider<CompletionParam
     ) {
         val position = parameters.position
         val annotation = PsiTreeUtil.getParentOfType(position, PsiAnnotation::class.java) ?: return
-        if (!AopCompletionContext.isSupportedAopAdviceAnnotation(annotation.qualifiedName)) return
+        if (!AopCompletionContext.isSupportedAopAnnotation(annotation.qualifiedName)) return
 
         val nameValuePair = PsiTreeUtil.getParentOfType(position, PsiNameValuePair::class.java)
         if (!AopCompletionContext.isSupportedPointcutAttribute(nameValuePair?.name)) return
@@ -105,9 +105,12 @@ internal object AopCompletionContext {
         )
     )
 
-    fun isSupportedAopAdviceAnnotation(qualifiedName: String?): Boolean {
+    fun isSupportedAopAnnotation(qualifiedName: String?): Boolean {
         return qualifiedName in AopInspectionRules.adviceAndPointcutAnnotations
     }
+
+    @Deprecated("Use isSupportedAopAnnotation", ReplaceWith("isSupportedAopAnnotation(qualifiedName)"))
+    fun isSupportedAopAdviceAnnotation(qualifiedName: String?): Boolean = isSupportedAopAnnotation(qualifiedName)
 
     fun isSupportedPointcutAttribute(attributeName: String?): Boolean {
         return attributeName == null || attributeName in supportedPointcutAttributeNames
