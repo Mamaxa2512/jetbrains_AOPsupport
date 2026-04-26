@@ -130,4 +130,9 @@ Acceptance criteria:
 - Status: started
 - Completion contributor made more context-aware for supported pointcut annotation attributes in: `src/main/kotlin/org/example/aop/completion/AopCompletionContributor.kt`
 - Added unit tests for completion context/prefix extraction helpers in: `src/test/kotlin/org/example/aop/completion/AopCompletionContextTest.kt`
+- Added logical-operator and expression-template completion suggestions for pointcut strings in: `src/main/kotlin/org/example/aop/completion/AopCompletionContributor.kt`
+- Added deterministic completion ranking (designator/operator/template priorities) in: `src/main/kotlin/org/example/aop/completion/AopCompletionContributor.kt`
+- Line marker decisions extracted into shared context helper for stable ordering/tooltips in: `src/main/kotlin/org/example/aop/marker/AopLineMarkerContext.kt`
+- Annotation highlighting decision extracted into shared context helper in: `src/main/kotlin/org/example/aop/annotator/AopAnnotationHighlightingContext.kt`
+- Added unit tests for marker/highlighting decision helpers in: `src/test/kotlin/org/example/aop/marker/AopLineMarkerContextTest.kt`, `src/test/kotlin/org/example/aop/annotator/AopAnnotationHighlightingContextTest.kt`
 

@@ -28,15 +28,20 @@ class AopLineMarkerProvider : RelatedItemLineMarkerProvider() {
         if (!psiClass.hasAnnotation(AopInspectionRules.ASPECT_ANNOTATION)) return
         val nameIdentifier = psiClass.nameIdentifier ?: return
 
-        val adviceMethods = psiClass.methods.filter { method ->
-            AopInspectionRules.adviceAndPointcutAnnotations.any { ann -> method.hasAnnotation(ann) }
-        }
+        val adviceMethods = psiClass.methods
+            .filter { method ->
+                val methodAnnotations = method.modifierList.annotations
+                    .mapNotNull { it.qualifiedName }
+                    .toSet()
+                AopLineMarkerContext.hasAdviceAnnotation(methodAnnotations)
+            }
+            .sortedBy { it.name }
         if (adviceMethods.isEmpty()) return
 
         result.add(
             NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementingMethod)
                 .setTargets(adviceMethods)
-                .setTooltipText("AOP aspect — ${adviceMethods.size} advice method(s)")
+                .setTooltipText(AopLineMarkerContext.classTooltip(adviceMethods.size))
                 .createLineMarkerInfo(nameIdentifier)
         )
     }
@@ -45,17 +50,20 @@ class AopLineMarkerProvider : RelatedItemLineMarkerProvider() {
         method: PsiMethod,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val matchedAnnotation = AopInspectionRules.adviceAndPointcutAnnotations.firstOrNull { method.hasAnnotation(it) } ?: return
+        val methodAnnotations = method.modifierList.annotations
+            .mapNotNull { it.qualifiedName }
+            .toSet()
+        val matchedAnnotation = AopLineMarkerContext
+            .adviceAnnotationsInPreferredOrder(methodAnnotations)
+            .firstOrNull() ?: return
         val containingClass = method.containingClass ?: return
         if (!containingClass.hasAnnotation(AopInspectionRules.ASPECT_ANNOTATION)) return
         val nameIdentifier = method.nameIdentifier ?: return
 
-        val shortName = matchedAnnotation.substringAfterLast('.')
-
         result.add(
             NavigationGutterIconBuilder.create(AllIcons.Gutter.OverridingMethod)
                 .setTargets(listOf(containingClass))
-                .setTooltipText("@$shortName — aspect: ${containingClass.name}")
+                .setTooltipText(AopLineMarkerContext.adviceMethodTooltip(matchedAnnotation, containingClass.name))
                 .createLineMarkerInfo(nameIdentifier)
         )
     }

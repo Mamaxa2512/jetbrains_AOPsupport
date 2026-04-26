@@ -6,15 +6,19 @@ import com.intellij.psi.PsiClass
 object AopInspectionRules {
     const val AOP_ANNOTATION_PACKAGE = "org.aspectj.lang.annotation"
     const val ASPECT_ANNOTATION = "org.aspectj.lang.annotation.Aspect"
+    const val POINTCUT_ANNOTATION = "org.aspectj.lang.annotation.Pointcut"
 
-    val adviceAndPointcutAnnotations = setOf(
+    val adviceAnnotations = listOf(
         "org.aspectj.lang.annotation.Before",
         "org.aspectj.lang.annotation.After",
         "org.aspectj.lang.annotation.Around",
         "org.aspectj.lang.annotation.AfterReturning",
-        "org.aspectj.lang.annotation.AfterThrowing",
-        "org.aspectj.lang.annotation.Pointcut"
+        "org.aspectj.lang.annotation.AfterThrowing"
     )
+
+    val pointcutAnnotations = setOf(POINTCUT_ANNOTATION)
+
+    val adviceAndPointcutAnnotations = adviceAnnotations.toSet() + pointcutAnnotations
 
     val aopAnnotationQualifiedNames = setOf(ASPECT_ANNOTATION) + adviceAndPointcutAnnotations
 
@@ -176,6 +180,7 @@ object AopInspectionRules {
         return depth == 0
     }
 }
+
 
 
 

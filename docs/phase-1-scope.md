@@ -35,4 +35,3 @@ Create a stable, repeatable baseline for development and internal beta preparati
 - Team can run the same verification steps locally
 - Scope boundaries are explicit and shared across the team
 
-
