@@ -2,6 +2,16 @@
 
 package org.example.aop.aspectj
 
+import com.intellij.psi.PsiFile
+import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.psi.PsiManager
+import com.intellij.openapi.project.Project
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.search.FilenameIndex
+import com.intellij.util.indexing.FileBasedIndex
+import org.example.aop.aspectj.AspectJFileType
+import org.example.aop.aspectj.psi.PointcutDeclaration
+
 internal object AspectJReferenceSupport {
 
     private val pointcutDeclarationRegex = Regex("""(?m)^\s*pointcut\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(""")
@@ -17,6 +27,94 @@ internal object AspectJReferenceSupport {
         return previous == ':' && fileText.indexOf(text, startOffset) == startOffset
     }
 
+    /**
+     * Find pointcut declaration by name using PSI tree (new approach)
+     */
+    fun findPointcutDeclaration(file: PsiFile, pointcutName: String): PointcutDeclaration? {
+        return PsiTreeUtil.findChildrenOfType(file, PointcutDeclaration::class.java)
+            .firstOrNull { it.getPointcutName() == pointcutName }
+    }
+
+    /**
+     * Search for a pointcut declaration across the project by scanning all .aj files.
+     * This is a fallback solution (no index). It is sufficient for Phase 5 prototype.
+     */
+    fun findPointcutDeclarationInProject(project: Project, pointcutName: String): PointcutDeclaration? {
+        val scope = GlobalSearchScope.projectScope(project)
+        val psiManager = PsiManager.getInstance(project)
+
+        // Fast path: use the project index of named pointcuts.
+        try {
+            val files = FileBasedIndex.getInstance().getContainingFiles(AspectJPointcutIndex.NAME, pointcutName, scope)
+            for (vf in files) {
+                val psi = psiManager.findFile(vf) ?: continue
+                val decl = findPointcutDeclaration(psi, pointcutName)
+                if (decl != null) return decl
+            }
+        } catch (_: Throwable) {
+            // ignore and fallback to direct scans
+        }
+
+        // Fallback: scan all AspectJ files in the project scope.
+        try {
+            val filenameFiles = FilenameIndex.getAllFilesByExt(project, "aj", scope)
+            for (vf in filenameFiles) {
+                val psi = psiManager.findFile(vf) ?: continue
+                val decl = findPointcutDeclaration(psi, pointcutName)
+                if (decl != null) return decl
+            }
+
+            val filesByType = com.intellij.psi.search.FileTypeIndex.getFiles(AspectJFileType, scope)
+            for (vf in filesByType) {
+                val psi = psiManager.findFile(vf) ?: continue
+                val decl = findPointcutDeclaration(psi, pointcutName)
+                if (decl != null) return decl
+            }
+
+            val base = project.baseDir
+            if (base != null) {
+                fun visit(vf: com.intellij.openapi.vfs.VirtualFile): PointcutDeclaration? {
+                    if (vf.isDirectory) {
+                        for (child in vf.children) {
+                            val found = visit(child)
+                            if (found != null) return found
+                        }
+                    } else if (vf.extension == "aj") {
+                        val psi = psiManager.findFile(vf) ?: return null
+                        val decl = findPointcutDeclaration(psi, pointcutName)
+                        if (decl != null) return decl
+                    }
+                    return null
+                }
+                return visit(base)
+            }
+        } catch (_: Throwable) {
+            return null
+        }
+        return null
+    }
+
+    fun collectPointcutNamesInProject(project: Project): Set<String> {
+        val names = linkedSetOf<String>()
+        try {
+            FileBasedIndex.getInstance().processAllKeys(
+                AspectJPointcutIndex.NAME,
+                { key: String ->
+                    names += key
+                    true
+                },
+                GlobalSearchScope.projectScope(project),
+                null
+            )
+        } catch (_: Throwable) {
+            // ignore and return what we have
+        }
+        return names
+    }
+
+    /**
+     * Find pointcut declaration offset using regex (legacy approach, kept for compatibility)
+     */
     fun findPointcutDeclarationOffset(fileText: String, pointcutName: String): Int? {
         return pointcutDeclarationRegex.findAll(fileText).firstOrNull { match ->
             match.groupValues[1] == pointcutName

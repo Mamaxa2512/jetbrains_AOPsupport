@@ -7,6 +7,8 @@ import com.intellij.psi.PsiReferenceRegistrar
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
 import com.intellij.psi.PsiReference
+import org.example.aop.aspectj.psi.AspectJPointcutReference
+import org.example.aop.aspectj.psi.DesignatorReference
 
 class AspectJReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
@@ -26,10 +28,22 @@ private class AspectJReferenceProvider : PsiReferenceProvider() {
         val startOffset = element.textRange.startOffset
 
         return buildList {
+            // PSI-based references (priority)
+            when (element) {
+                is DesignatorReference -> {
+                    // Pointcut reference in designator chain
+                    element.referenceName?.let { name ->
+                        add(AspectJPointcutReference(element, name))
+                    }
+                }
+            }
+
+            // Fallback to regex-based references for compatibility
             if (AspectJReferenceSupport.isAnnotationReference(text, fileText, startOffset)) {
                 add(AspectJAnnotationReference(element))
             }
             if (AspectJReferenceSupport.isNamedPointcutReference(text, fileText, startOffset)) {
+                // Use legacy reference for now
                 add(AspectJNamedPointcutReference(element))
             }
         }.toTypedArray()

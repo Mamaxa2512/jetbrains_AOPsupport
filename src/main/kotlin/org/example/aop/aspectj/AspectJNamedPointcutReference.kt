@@ -11,7 +11,18 @@ internal class AspectJNamedPointcutReference(
 
     override fun resolve(): PsiElement? {
         val file = element.containingFile
-        val declarationOffset = AspectJReferenceSupport.findPointcutDeclarationOffset(file.text, element.text) ?: return null
+        val pointcutName = element.text
+
+        val psiDecl = AspectJReferenceSupport.findPointcutDeclaration(file, pointcutName)
+        if (psiDecl != null) {
+            return psiDecl.nameIdentifier
+        }
+
+        val projectDecl = AspectJReferenceSupport.findPointcutDeclarationInProject(file.project, pointcutName)
+        if (projectDecl != null) return projectDecl.nameIdentifier
+
+        // Fallback to regex-based approach for compatibility
+        val declarationOffset = AspectJReferenceSupport.findPointcutDeclarationOffset(file.text, pointcutName) ?: return null
         return file.findElementAt(declarationOffset)
     }
 

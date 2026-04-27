@@ -28,6 +28,27 @@
         <lang.syntaxHighlighterFactory language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJSyntaxHighlighterFactory"/>
         <annotator language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJAnnotator"/>
         <psi.referenceContributor language="AspectJ" implementation="org.example.aop.aspectj.AspectJReferenceContributor"/>
+        <fileBasedIndex implementation="org.example.aop.aspectj.AspectJPointcutIndex"/>
+
+        <!-- Phase 3: Find Usages for AspectJ pointcuts -->
+        <findUsagesHandlerFactory implementation="org.example.aop.aspectj.AspectJFindUsagesHandlerFactory"/>
+
+        <!-- Phase 3: Rename refactoring for AspectJ pointcuts -->
+        <renamePsiElementProcessor implementation="org.example.aop.aspectj.AspectJSimpleRenameProcessor"/>
+
+        <!-- Phase 4: Documentation (hover) -->
+        <lang.documentationProvider language="AspectJ"
+                                    implementationClass="org.example.aop.aspectj.AspectJDocumentationProvider"/>
+
+        <!-- Phase 4: Error checking (undefined pointcuts, unused declarations) -->
+        <localInspection
+            language="AspectJ"
+            shortName="AspectJInspection"
+            displayName="AspectJ code analysis"
+            groupName="AspectJ"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.aspectj.AspectJInspection"/>
 
         <!-- Phase 2: gutter icons -->
         <codeInsight.lineMarkerProvider

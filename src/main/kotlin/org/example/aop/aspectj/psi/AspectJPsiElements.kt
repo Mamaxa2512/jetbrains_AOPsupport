@@ -2,8 +2,10 @@
 
 package org.example.aop.aspectj.psi
 
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.util.PsiTreeUtil
@@ -110,7 +112,18 @@ class PointcutDeclaration(node: ASTNode) : AspectJPsiElement(node), PsiNameIdent
 
 	override fun getName(): String? = nameIdentifier?.text
 
-	override fun setName(name: String): PsiElement = throw UnsupportedOperationException()
+	override fun setName(name: String): PsiElement {
+		val identifier = nameIdentifier ?: return this
+		val file = containingFile ?: return this
+		val document = PsiDocumentManager.getInstance(project).getDocument(file) ?: return this
+
+		WriteCommandAction.runWriteCommandAction(project) {
+			document.replaceString(identifier.textRange.startOffset, identifier.textRange.endOffset, name)
+			PsiDocumentManager.getInstance(project).commitDocument(document)
+		}
+
+		return this
+	}
 
 	fun getModifier(): String? {
 		var child = firstChild
