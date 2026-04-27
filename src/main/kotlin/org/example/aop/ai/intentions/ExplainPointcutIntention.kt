@@ -1,46 +1,38 @@
 package org.example.aop.ai.intentions
 
-import com.intellij.codeInsight.intention.IntentionAction
-import com.intellij.codeInsight.intention.PriorityAction
+import com.intellij.openapi.actionSystem.ActionUpdateThread
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.progress.ProgressManager
+import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiLiteralExpression
-import com.intellij.psi.util.PsiTreeUtil
 import kotlinx.coroutines.runBlocking
 import org.example.aop.ai.AopAiService
-import org.example.aop.inspection.AopInspectionRules
+import org.example.aop.ai.AopAiSnippetSupport
 
 /**
- * Intention для пояснення pointcut виразу за допомогою AI
+ * Action для пояснення pointcut або AspectJ snippets за допомогою AI
  */
-class ExplainPointcutIntention : IntentionAction, PriorityAction {
+class ExplainPointcutIntention : AnAction() {
 
-    override fun getText(): String = "Explain this pointcut with AI"
-
-    override fun getFamilyName(): String = "AOP AI"
-
-    override fun isAvailable(project: Project, editor: Editor, file: PsiFile): Boolean {
-        val element = file.findElementAt(editor.caretModel.offset) ?: return false
-        val literal = PsiTreeUtil.getParentOfType(element, PsiLiteralExpression::class.java)
-            ?: return false
-
-        // Перевіряємо, чи це pointcut вираз
-        val value = literal.value as? String ?: return false
-        return value.isNotBlank() && isLikelyPointcutExpression(value)
+    init {
+        templatePresentation.text = "Explain this pointcut with AI"
     }
 
-    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
-        val element = file.findElementAt(editor.caretModel.offset) ?: return
-        val literal = PsiTreeUtil.getParentOfType(element, PsiLiteralExpression::class.java)
-            ?: return
-        val pointcutExpression = literal.value as? String ?: return
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
+
+    override fun actionPerformed(e: AnActionEvent) {
+        val project = e.project ?: return
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
+        val file = e.getData(CommonDataKeys.PSI_FILE) ?: return
+        val snippet = AopAiSnippetSupport.resolveSnippet(editor, file) ?: return
+        val pointcutExpression = snippet.text
 
         // Пояснюємо pointcut в background task
-        ProgressManager.getInstance().run(object : Task.Backgroundable(
+        com.intellij.openapi.progress.ProgressManager.getInstance().run(object : Task.Backgroundable(
             project,
             "Explaining Pointcut with AI...",
             true
@@ -79,14 +71,12 @@ class ExplainPointcutIntention : IntentionAction, PriorityAction {
         })
     }
 
-    override fun startInWriteAction(): Boolean = false
-
-    override fun getPriority(): PriorityAction.Priority = PriorityAction.Priority.NORMAL
-
-    private fun isLikelyPointcutExpression(value: String): Boolean {
-        // Перевіряємо, чи містить вираз pointcut designators
-        return AopInspectionRules.supportedPointcutDesignators.any { 
-            value.contains("$it(")
-        }
+    override fun update(e: AnActionEvent) {
+        val editor = e.getData(CommonDataKeys.EDITOR)
+        val file = e.getData(CommonDataKeys.PSI_FILE)
+        val available = editor != null && file != null && AopAiSnippetSupport.resolveSnippet(editor, file)?.let {
+            AopAiSnippetSupport.looksLikeAopSnippet(it.text)
+        } == true
+        e.presentation.isEnabledAndVisible = available
     }
 }

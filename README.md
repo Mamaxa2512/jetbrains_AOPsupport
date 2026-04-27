@@ -27,6 +27,13 @@
   - Шаблони виразів для типових сценаріїв
 - Працює в анотаціях `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, `@Pointcut`
 
+### 🤖 AI-помічники для pointcut і AspectJ
+- **Generate Pointcut from Description** — генерує pointcut з текстового опису
+- **Explain Pointcut** — пояснює вибраний pointcut або AspectJ-сніпет
+- **Optimize Pointcut** — підказує більш вузький і продуктивний варіант
+- **Fix with AI** — автоматично пропонує виправлення для вибраного pointcut / AspectJ-фрагмента
+- Працює з Java/Kotlin string literals і з вибраними AspectJ-фрагментами в `.aj`
+
 ### 🔍 Інспекції коду
 
 **AspectNotBean**

@@ -22,6 +22,13 @@
         <!-- Plugin startup -->
         <projectActivity implementation="org.example.aop.AopPlugin"/>
 
+        <!-- Native AspectJ `.aj` support -->
+        <fileTypeFactory implementation="org.example.aop.aspectj.AspectJFileTypeFactory"/>
+        <lang.parserDefinition language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJSyntaxHighlighterFactory"/>
+        <annotator language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJAnnotator"/>
+        <psi.referenceContributor language="AspectJ" implementation="org.example.aop.aspectj.AspectJReferenceContributor"/>
+
         <!-- Phase 2: gutter icons -->
         <codeInsight.lineMarkerProvider
             language="JAVA"
@@ -77,16 +84,9 @@
         <completion.contributor
             language="kotlin"
             implementationClass="org.example.aop.completion.AopCompletionContributor"/>
-
-        <!-- AI intentions -->
-        <intentionAction>
-            <className>org.example.aop.ai.intentions.ExplainPointcutIntention</className>
-            <category>AOP</category>
-        </intentionAction>
-        <intentionAction>
-            <className>org.example.aop.ai.intentions.OptimizePointcutIntention</className>
-            <category>AOP</category>
-        </intentionAction>
+        <completion.contributor
+            language="AspectJ"
+            implementationClass="org.example.aop.aspectj.AspectJCompletionContributor"/>
 
         <!-- Phase 4: tool window -->
         <!-- <toolWindow ... /> -->
@@ -98,6 +98,27 @@
             class="org.example.aop.ai.actions.GeneratePointcutAction"
             text="Generate Pointcut with AI"
             description="Generate pointcut expression from natural language description">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <action
+            id="org.example.aop.ai.actions.ExplainPointcutAction"
+            class="org.example.aop.ai.intentions.ExplainPointcutIntention"
+            text="Explain Pointcut with AI"
+            description="Explain the selected pointcut or AspectJ snippet with AI">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <action
+            id="org.example.aop.ai.actions.OptimizePointcutAction"
+            class="org.example.aop.ai.intentions.OptimizePointcutIntention"
+            text="Optimize Pointcut with AI"
+            description="Optimize the selected pointcut or AspectJ snippet with AI">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <action
+            id="org.example.aop.ai.actions.FixPointcutAction"
+            class="org.example.aop.ai.actions.FixPointcutAction"
+            text="Fix with AI"
+            description="Fix the selected pointcut or AspectJ snippet with AI">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>

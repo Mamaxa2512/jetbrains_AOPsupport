@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.example.aop.ai
 
 import com.intellij.openapi.components.Service
@@ -10,7 +12,7 @@ import kotlinx.coroutines.withContext
  * Використовує JetBrains AI Assistant API
  */
 @Service(Service.Level.PROJECT)
-class AopAiService(private val project: Project) {
+class AopAiService(project: Project) {
 
     /**
      * Генерує pointcut вираз з текстового опису
@@ -34,7 +36,8 @@ class AopAiService(private val project: Project) {
     suspend fun optimizePointcut(expression: String): OptimizationResult = withContext(Dispatchers.IO) {
         val prompt = buildOptimizePrompt(expression)
         val response = requestAi(prompt)
-        return@withContext parseOptimizationResult(response)
+        val result = parseOptimizationResult(response)
+        return@withContext result.copy(performance = analyzePerformance(expression))
     }
 
     /**
@@ -137,7 +140,7 @@ class AopAiService(private val project: Project) {
     // AI Request
     // ═══════════════════════════════════════════════════════════════════════
 
-    private suspend fun requestAi(prompt: String): String {
+    private fun requestAi(prompt: String): String {
         // Deterministic local fallback implementation.
         // Keeps features usable even when external AI providers are unavailable.
         return when {
@@ -237,9 +240,13 @@ class AopAiService(private val project: Project) {
                 value.startsWith("@args") ||
                 value.startsWith("this") ||
                 value.startsWith("target") ||
-                value.startsWith("bean")
+                value.startsWith("bean") ||
+                value.startsWith("before") ||
+                value.startsWith("after") ||
+                value.startsWith("around") ||
+                value.startsWith("pointcut")
         }
-        return line?.trim().orEmpty()
+        return line?.let { AopAiSnippetSupport.normalizeSnippet(it) }.orEmpty()
     }
 
     private fun explainExpression(expression: String): String {
@@ -250,6 +257,12 @@ class AopAiService(private val project: Project) {
             expression.contains("within(") -> "Matches all join points inside matched classes/packages."
             expression.contains("@annotation(") -> "Matches methods annotated with a specific annotation."
             expression.contains("bean(") -> "Matches Spring beans by bean name pattern."
+            expression.contains("before(", ignoreCase = true) ||
+                expression.contains("after(", ignoreCase = true) ||
+                expression.contains("around(", ignoreCase = true) ->
+                "AspectJ advice declaration that delegates to a named pointcut."
+            Regex("^[A-Za-z_][A-Za-z0-9_]*\\s*\\(\\s*\\)$").matches(expression) ->
+                "Named pointcut reference used by advice declarations."
             else -> "Matches join points based on provided pointcut filters."
         }
         val warnings = mutableListOf<String>()
@@ -361,7 +374,8 @@ class AopAiService(private val project: Project) {
 data class OptimizationResult(
     val optimizedExpression: String,
     val reason: String,
-    val impact: PerformanceImpact
+    val impact: PerformanceImpact,
+    val performance: PerformanceAnalysis? = null
 )
 
 enum class PerformanceImpact {

@@ -84,6 +84,8 @@ Acceptance criteria:
 - Build artifact generated successfully: `build/distributions/AOP-1.0.0-beta.1.zip` (39KB)
 - Release checklist updated with completed items in: `docs/release-checklist.md`
 - Smoke testing checklist provided in `docs/smoke-test-guide.md` (manual execution by beta testers)
+- AI pointcut helpers surfaced in the editor: `Generate Pointcut from Description`, `Explain Pointcut`, `Optimize Pointcut`, `Fix with AI`
+- Native AspectJ snippets are now supported best-effort for these AI helpers when selected in `.aj` files
 
 ### Phase 5 - Beta Release Preparation (P0, Weeks 11-12)
 Goals:
