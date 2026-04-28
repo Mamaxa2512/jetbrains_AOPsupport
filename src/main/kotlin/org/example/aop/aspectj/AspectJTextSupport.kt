@@ -10,6 +10,9 @@ internal data class AspectJPointcutOccurrence(
 )
 
 internal object AspectJTextSupport {
+    private val declareKinds = listOf("parents", "warning", "error", "soft", "precedence")
+    private val perClauses = listOf("perthis", "pertarget", "percflow", "percflowbelow", "pertypewithin")
+
 
     private val advicePattern = Regex(
         """(?m)^\s*(before|after|around)\s*\([^)]*\)\s*(?:returning(?:\s*\([^)]*\))?|throwing(?:\s*\([^)]*\))?)?\s*:\s*(.+?)(?:\s*[;{]\s*|\s*$)""",
@@ -28,6 +31,14 @@ internal object AspectJTextSupport {
 
     private val pointcutContextLinePattern = Regex(
         """(?i)\b(pointcut|before|after|around)\b[^\n]*:\s*[^\n]*$"""
+    )
+
+    private val declareContextLinePattern = Regex(
+        """(?i)\bdeclare\b(?:\s+\w*)?$"""
+    )
+
+    private val aspectHeaderLinePattern = Regex(
+        """(?i)^\s*(?:privileged\s+)?aspect\b[^\n]*$"""
     )
 
     fun collectPointcutOccurrences(fileText: String): List<AspectJPointcutOccurrence> {
@@ -57,11 +68,22 @@ internal object AspectJTextSupport {
     }
 
     fun isPointcutContext(fileText: String, offset: Int): Boolean {
-        val safeOffset = offset.coerceIn(0, fileText.length)
-        val lineStart = fileText.lastIndexOf('\n', safeOffset - 1).let { if (it == -1) 0 else it + 1 }
-        val linePrefix = fileText.substring(lineStart, safeOffset)
+        val linePrefix = linePrefix(fileText, offset)
         return pointcutContextLinePattern.containsMatchIn(linePrefix)
     }
+
+    fun isDeclareContext(fileText: String, offset: Int): Boolean {
+        return declareContextLinePattern.containsMatchIn(linePrefix(fileText, offset))
+    }
+
+    fun isAspectHeaderContext(fileText: String, offset: Int): Boolean {
+        val prefix = linePrefix(fileText, offset)
+        return aspectHeaderLinePattern.containsMatchIn(prefix) && !prefix.contains('{')
+    }
+
+    fun declareKeywordCompletions(): List<String> = declareKinds
+
+    fun perClauseCompletions(): List<String> = perClauses
 
     fun extractCompletionPrefix(fileText: String, offset: Int): String {
         val safeOffset = offset.coerceIn(0, fileText.length)
@@ -76,8 +98,13 @@ internal object AspectJTextSupport {
         }
         return fileText.substring(start, safeOffset)
     }
-}
 
+    private fun linePrefix(fileText: String, offset: Int): String {
+        val safeOffset = offset.coerceIn(0, fileText.length)
+        val lineStart = fileText.lastIndexOf('\n', safeOffset - 1).let { if (it == -1) 0 else it + 1 }
+        return fileText.substring(lineStart, safeOffset)
+    }
+}
 
 
 

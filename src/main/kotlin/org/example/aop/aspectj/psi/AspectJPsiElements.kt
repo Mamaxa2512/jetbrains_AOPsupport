@@ -37,6 +37,15 @@ class AspectDeclaration(node: ASTNode) : AspectJPsiElement(node) {
 
 	fun getPointcutDeclarations(): List<PointcutDeclaration> =
 		PsiTreeUtil.getChildrenOfTypeAsList(this, PointcutDeclaration::class.java)
+
+	fun getDeclareStatements(): List<DeclareStatement> =
+		PsiTreeUtil.getChildrenOfTypeAsList(this, DeclareStatement::class.java)
+
+	fun getInterTypeDeclarations(): List<InterTypeDeclaration> =
+		PsiTreeUtil.getChildrenOfTypeAsList(this, InterTypeDeclaration::class.java)
+
+	fun getPerClause(): PerClause? =
+		PsiTreeUtil.findChildOfType(this, PerClause::class.java)
 }
 
 // ============================================================================
@@ -185,12 +194,45 @@ class Designator(node: ASTNode) : AspectJPsiElement(node) {
 }
 
 // ============================================================================
+// Full AspectJ Constructs
+// ============================================================================
+
+open class DeclareStatement(node: ASTNode) : AspectJPsiElement(node) {
+	fun getTypeReferences(): List<TypeReferenceElement> =
+		PsiTreeUtil.getChildrenOfTypeAsList(this, TypeReferenceElement::class.java)
+
+	fun getMessage(): DeclareMessage? =
+		PsiTreeUtil.findChildOfType(this, DeclareMessage::class.java)
+}
+
+class DeclareParentsDeclaration(node: ASTNode) : DeclareStatement(node)
+
+class DeclareWarningDeclaration(node: ASTNode) : DeclareStatement(node)
+
+class DeclareErrorDeclaration(node: ASTNode) : DeclareStatement(node)
+
+class DeclareSoftDeclaration(node: ASTNode) : DeclareStatement(node)
+
+class DeclarePrecedenceDeclaration(node: ASTNode) : DeclareStatement(node)
+
+class InterTypeDeclaration(node: ASTNode) : AspectJPsiElement(node) {
+	fun getTargetTypeReferences(): List<TypeReferenceElement> =
+		PsiTreeUtil.getChildrenOfTypeAsList(this, TypeReferenceElement::class.java)
+}
+
+class PerClause(node: ASTNode) : AspectJPsiElement(node) {
+	fun getClauseKind(): String? = firstChild?.text
+}
+
+class TypeReferenceElement(node: ASTNode) : AspectJPsiElement(node)
+
+class DeclareMessage(node: ASTNode) : AspectJPsiElement(node)
+
+// ============================================================================
 // Supporting Elements
 // ============================================================================
 
 class DesignatorReference(node: ASTNode) : AspectJPsiElement(node) {
 	val referenceName: String? get() = text
 }
-
-
 

@@ -6,8 +6,10 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
+import org.example.aop.aspectj.psi.DeclareStatement
 import org.example.aop.aspectj.psi.PointcutDeclaration
 import org.example.aop.aspectj.psi.DesignatorReference
+import org.example.aop.aspectj.psi.PerClause
 
 /**
  * Provides hover documentation (Ctrl+Q or mouse hover) for AspectJ elements.
@@ -25,8 +27,12 @@ class AspectJDocumentationProvider : DocumentationProvider {
 
         return when {
             element is PointcutDeclaration -> generatePointcutDoc(element)
+            element is DeclareStatement -> generateDeclareDoc(element)
+            element is PerClause -> generatePerClauseDoc(element)
             element.parent is DesignatorReference -> generateReferenceDoc(element)
             originalElement is PointcutDeclaration -> generatePointcutDoc(originalElement)
+            originalElement is DeclareStatement -> generateDeclareDoc(originalElement)
+            originalElement is PerClause -> generatePerClauseDoc(originalElement)
             originalElement?.parent is DesignatorReference -> generateReferenceDoc(originalElement!!)
             else -> null
         }
@@ -37,8 +43,12 @@ class AspectJDocumentationProvider : DocumentationProvider {
 
         return when {
             element is PointcutDeclaration -> generateFullPointcutDoc(element)
+            element is DeclareStatement -> generateFullDeclareDoc(element)
+            element is PerClause -> generateFullPerClauseDoc(element)
             element.parent is DesignatorReference -> generateFullReferenceDoc(element)
             originalElement is PointcutDeclaration -> generateFullPointcutDoc(originalElement)
+            originalElement is DeclareStatement -> generateFullDeclareDoc(originalElement)
+            originalElement is PerClause -> generateFullPerClauseDoc(originalElement)
             originalElement?.parent is DesignatorReference -> generateFullReferenceDoc(originalElement!!)
             else -> null
         }
@@ -112,6 +122,38 @@ class AspectJDocumentationProvider : DocumentationProvider {
         return ReferencesSearch.search(pointcut, GlobalSearchScope.projectScope(pointcut.project)).count()
     }
 
+    private fun generateDeclareDoc(statement: DeclareStatement): String {
+        val kind = AspectJLineMarkerContext.declareTooltip(statement)
+        return "<b>$kind</b><br/><pre>${statement.text}</pre>"
+    }
+
+    private fun generateFullDeclareDoc(statement: DeclareStatement): String {
+        val kind = AspectJLineMarkerContext.declareTooltip(statement)
+        return buildString {
+            append("<html><body>")
+            append("<h3>$kind</h3>")
+            append("<pre style='background-color: #f0f0f0; padding: 8px;'>${statement.text}</pre>")
+            append("<p><b>File:</b> <code>${statement.containingFile.name}</code></p>")
+            append("</body></html>")
+        }
+    }
+
+    private fun generatePerClauseDoc(perClause: PerClause): String {
+        val kind = perClause.getClauseKind() ?: "per-clause"
+        return "<b>$kind</b><br/>Aspect instantiation model"
+    }
+
+    private fun generateFullPerClauseDoc(perClause: PerClause): String {
+        val kind = perClause.getClauseKind() ?: "per-clause"
+        return buildString {
+            append("<html><body>")
+            append("<h3>$kind</h3>")
+            append("<pre style='background-color: #f0f0f0; padding: 8px;'>${perClause.text}</pre>")
+            append("<p><b>Meaning:</b> Aspect instantiation model for the containing aspect.</p>")
+            append("</body></html>")
+        }
+    }
+
     override fun getDocumentationElementForLookupItem(psiManager: PsiManager?, obj: Any?, element: PsiElement?): PsiElement? {
         return element
     }
@@ -120,5 +162,4 @@ class AspectJDocumentationProvider : DocumentationProvider {
         return null
     }
 }
-
 

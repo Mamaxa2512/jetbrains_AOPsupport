@@ -1,6 +1,6 @@
 # AOP Support Plugin for IntelliJ IDEA
 
-[![Version](https://img.shields.io/badge/version-1.1.0--beta.1-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.2.0--beta.1-blue.svg)](CHANGELOG.md)
 [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2025.1-orange.svg)](https://www.jetbrains.com/idea/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -14,6 +14,7 @@
 - Іконки біля `@Aspect` класів для швидкого переходу до advice методів
 - Іконки біля advice методів для повернення до aspect класу
 - Підтримка всіх типів advice: `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`
+- Іконки в `.aj` файлах для aspect declarations, pointcuts, `declare` statements, per-clauses та inter-type declarations
 
 ### 🎨 Підсвічування анотацій
 - Візуальне виділення AOP анотацій в редакторі
@@ -26,6 +27,14 @@
   - Логічні оператори: `&&`, `||`, `!`
   - Шаблони виразів для типових сценаріїв
 - Працює в анотаціях `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, `@Pointcut`
+- Для `.aj` також підказує `declare` kinds, per-clauses та ключові AspectJ конструкції
+
+### 🧩 Native `.aj` Support
+- Парсинг AspectJ аспектів з `privileged`, per-clauses, `declare` statements та inter-type declarations
+- PSI-навігація для pointcuts, `declare parents` та target types в inter-type declarations
+- Project-wide indexing для aspect names, pointcut names, `declare` kinds та inter-type targets
+- Hover documentation для pointcut declarations, `declare` statements і per-clauses
+- Інспекції для unresolved pointcuts, unresolved `declare parents` / inter-type target types та порожніх `declare warning/error` messages
 
 ### 🤖 AI-помічники для pointcut і AspectJ
 - **Generate Pointcut from Description** — генерує pointcut з текстового опису
@@ -63,7 +72,7 @@
 ## 📦 Встановлення
 
 ### З файлу
-1. Завантажте `AOP-1.1.0-beta.1.zip` з [releases](../../releases)
+1. Завантажте `AOP-1.2.0-beta.1.zip` з [releases](../../releases)
 2. В IntelliJ IDEA: `Settings` → `Plugins` → `⚙️` → `Install Plugin from Disk...`
 3. Виберіть завантажений ZIP файл
 4. Перезапустіть IDE
@@ -114,7 +123,8 @@ public class LoggingAspect {
 | Java файли | ✅ Повна підтримка |
 | Kotlin файли | ✅ Базова підтримка (інспекції, підсвічування, completion) |
 | Spring AOP | ✅ Основний фокус |
-| AspectJ анотації | ✅ Підмножина |
+| AspectJ `.aj` files | ✅ Розширена beta підтримка |
+| AspectJ анотації | ✅ Підмножина + native `.aj` PSI |
 | Gutter навігація | ✅ |
 | Автодоповнення | ✅ |
 | Інспекції | ✅ |
@@ -125,10 +135,9 @@ public class LoggingAspect {
 
 ### ❌ Поза scope Beta
 
-- Kotlin файли (планується в майбутніх версіях)
 - XML-конфігурація Spring AOP
-- Повна підтримка AspectJ compile-time weaving
-- Cross-file аналіз використання pointcut
+- Повна підтримка AspectJ compile-time weaving / LTW configuration
+- Semantic validation of every ITD member signature and all `declare precedence` ordering conflicts
 - Tool window для візуалізації
 
 ## 🧪 Тестування
@@ -162,7 +171,7 @@ public class LoggingAspect {
 
 - **Kotlin**: підтримуються базові editor-функції для анотаційних pointcut-виразів; розширений cross-file аналіз поки що обмежений
 - **Без XML**: XML-конфігурація Spring AOP не підтримується
-- **Без cross-file аналізу**: Використання pointcut між файлами не відстежується
+- **`.aj` support is beta**: grammar/indexing/navigation already cover major constructs, but advanced semantic checks are still expanding
 - **AspectJ weaving**: Повні можливості compile-time weaving поза scope
 
 ## 📝 Зворотній зв'язок
@@ -181,7 +190,7 @@ public class LoggingAspect {
 - ⚠️ False Positive/Negative
 
 ### Включіть:
-- Версію плагіна (1.1.0-beta.1)
+- Версію плагіна (1.2.0-beta.1)
 - Версію IntelliJ IDEA
 - Кроки для відтворення
 - Приклад коду (якщо можливо)
@@ -211,7 +220,7 @@ public class LoggingAspect {
 ./gradlew verifyPlugin
 ```
 
-Артефакт: `build/distributions/AOP-1.1.0-beta.1.zip`
+Артефакт: `build/distributions/AOP-1.2.0-beta.1.zip`
 
 ### Структура проекту
 
@@ -248,8 +257,8 @@ src/
 
 ---
 
-**Версія**: 1.1.0-beta.1  
-**Дата релізу**: 2026-04-26  
+**Версія**: 1.2.0-beta.1  
+**Дата релізу**: 2026-04-28  
 **Статус**: Internal Beta Testing
 
 ## 🆕 Що нового в 1.1.0

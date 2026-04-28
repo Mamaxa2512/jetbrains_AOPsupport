@@ -9,6 +9,7 @@ import com.intellij.util.ProcessingContext
 import com.intellij.psi.PsiReference
 import org.example.aop.aspectj.psi.AspectJPointcutReference
 import org.example.aop.aspectj.psi.DesignatorReference
+import org.example.aop.aspectj.psi.TypeReferenceElement
 
 class AspectJReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
@@ -36,6 +37,9 @@ private class AspectJReferenceProvider : PsiReferenceProvider() {
                         add(AspectJPointcutReference(element, name))
                     }
                 }
+                is TypeReferenceElement -> {
+                    add(AspectJTypeReference(element))
+                }
             }
 
             // Fallback to regex-based references for compatibility
@@ -49,4 +53,3 @@ private class AspectJReferenceProvider : PsiReferenceProvider() {
         }.toTypedArray()
     }
 }
-

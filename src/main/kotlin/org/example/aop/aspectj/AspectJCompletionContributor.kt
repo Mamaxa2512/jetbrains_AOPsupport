@@ -31,61 +31,113 @@ private class AspectJPointcutCompletionProvider : CompletionProvider<CompletionP
         result: CompletionResultSet
     ) {
         val position = parameters.position
-        val fileText = parameters.position.containingFile.text
+        val fileText = position.containingFile.text
         val offset = parameters.offset
-        
-        // Check if we're in a pointcut context (advice or pointcut declaration)
-        if (!AspectJTextSupport.isPointcutContext(fileText, offset)) return
-        
+        val inPointcutContext = AspectJTextSupport.isPointcutContext(fileText, offset)
+        val inDeclareContext = AspectJTextSupport.isDeclareContext(fileText, offset)
+        val inAspectHeaderContext = AspectJTextSupport.isAspectHeaderContext(fileText, offset)
+
+        if (!inPointcutContext && !inDeclareContext && !inAspectHeaderContext) return
+
         val prefix = AspectJTextSupport.extractCompletionPrefix(fileText, offset)
         val prefixed = result.withPrefixMatcher(prefix)
-        
+
+        addStructuralKeywordCompletions(inDeclareContext, inAspectHeaderContext, prefixed)
+
         // Add built-in pointcut designators
-        AopInspectionRules.pointcutCompletionItems.forEach { (designator, description) ->
-            val element = LookupElementBuilder.create(designator)
-                .withPresentableText("$designator(...)")
-                .withTailText("  $description", true)
-                .withTypeText("AspectJ pointcut")
-                .withInsertHandler { ctx, _ ->
-                    ctx.document.insertString(ctx.tailOffset, "()")
-                    ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
-                }
-            prefixed.addElement(PrioritizedLookupElement.withPriority(element, 200.0))
+        if (inPointcutContext) {
+            AopInspectionRules.pointcutCompletionItems.forEach { (designator, description) ->
+                val element = LookupElementBuilder.create(designator)
+                    .withPresentableText("$designator(...)")
+                    .withTailText("  $description", true)
+                    .withTypeText("AspectJ pointcut")
+                    .withInsertHandler { ctx, _ ->
+                        ctx.document.insertString(ctx.tailOffset, "()")
+                        ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
+                    }
+                prefixed.addElement(PrioritizedLookupElement.withPriority(element, 200.0))
+            }
+
+            // Collect declared pointcuts from PSI tree
+            val declaredPointcuts = collectDeclaredPointcuts(position)
+            declaredPointcuts.forEach { (pointcutName, _) ->
+                val element = LookupElementBuilder.create(pointcutName)
+                    .withPresentableText("$pointcutName()")
+                    .withTailText("  declared pointcut", true)
+                    .withTypeText("AspectJ")
+                    .withInsertHandler { ctx, _ ->
+                        ctx.document.insertString(ctx.tailOffset, "()")
+                        ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
+                    }
+                prefixed.addElement(PrioritizedLookupElement.withPriority(element, 180.0))
+            }
+
+            // Also keep regex-based fallback for compatibility
+            AspectJTextSupport.collectDeclaredPointcutNames(fileText).forEach { pointcutName ->
+                val element = LookupElementBuilder.create(pointcutName)
+                    .withPresentableText("$pointcutName()")
+                    .withTailText("  declared pointcut (regex fallback)", true)
+                    .withTypeText("AspectJ")
+                    .withInsertHandler { ctx, _ ->
+                        ctx.document.insertString(ctx.tailOffset, "()")
+                        ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
+                    }
+                prefixed.addElement(PrioritizedLookupElement.withPriority(element, 170.0))
+            }
+
+            // Add logical operators
+            listOf("&&", "||", "!").forEach { operator ->
+                val element = LookupElementBuilder.create(operator)
+                    .withTailText("  logical operator", true)
+                    .withTypeText("AspectJ")
+                prefixed.addElement(PrioritizedLookupElement.withPriority(element, 120.0))
+            }
         }
-        
-        // Collect declared pointcuts from PSI tree
-        val declaredPointcuts = collectDeclaredPointcuts(parameters.position)
-        declaredPointcuts.forEach { (pointcutName, pointcutDecl) ->
-            val element = LookupElementBuilder.create(pointcutName)
-                .withPresentableText("$pointcutName()")
-                .withTailText("  declared pointcut", true)
-                .withTypeText("AspectJ")
-                .withInsertHandler { ctx, _ ->
-                    ctx.document.insertString(ctx.tailOffset, "()")
-                    ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
-                }
-            prefixed.addElement(PrioritizedLookupElement.withPriority(element, 180.0))
+    }
+
+    private fun addStructuralKeywordCompletions(
+        inDeclareContext: Boolean,
+        inAspectHeaderContext: Boolean,
+        result: CompletionResultSet
+    ) {
+        if (inDeclareContext) {
+            AspectJTextSupport.declareKeywordCompletions().forEach { keyword ->
+                result.addElement(
+                    PrioritizedLookupElement.withPriority(
+                        LookupElementBuilder.create(keyword)
+                            .withTypeText("AspectJ declare")
+                            .withTailText("  declare $keyword", true),
+                        220.0
+                    )
+                )
+            }
         }
-        
-        // Also keep regex-based fallback for compatibility
-        AspectJTextSupport.collectDeclaredPointcutNames(fileText).forEach { pointcutName ->
-            val element = LookupElementBuilder.create(pointcutName)
-                .withPresentableText("$pointcutName()")
-                .withTailText("  declared pointcut (regex fallback)", true)
-                .withTypeText("AspectJ")
-                .withInsertHandler { ctx, _ ->
-                    ctx.document.insertString(ctx.tailOffset, "()")
-                    ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
-                }
-            prefixed.addElement(PrioritizedLookupElement.withPriority(element, 170.0))
+
+        if (inAspectHeaderContext) {
+            AspectJTextSupport.perClauseCompletions().forEach { keyword ->
+                result.addElement(
+                    PrioritizedLookupElement.withPriority(
+                        LookupElementBuilder.create(keyword)
+                            .withPresentableText("$keyword(...)")
+                            .withTypeText("AspectJ per-clause")
+                            .withInsertHandler { ctx, _ ->
+                                ctx.document.insertString(ctx.tailOffset, "()")
+                                ctx.editor.caretModel.moveToOffset(ctx.tailOffset - 1)
+                            },
+                        210.0
+                    )
+                )
+            }
         }
-        
-        // Add logical operators
-        listOf("&&", "||", "!").forEach { operator ->
-            val element = LookupElementBuilder.create(operator)
-                .withTailText("  logical operator", true)
-                .withTypeText("AspectJ")
-            prefixed.addElement(PrioritizedLookupElement.withPriority(element, 120.0))
+
+        listOf("aspect", "privileged", "declare", "pointcut", "before", "after", "around").forEach { keyword ->
+            result.addElement(
+                PrioritizedLookupElement.withPriority(
+                    LookupElementBuilder.create(keyword)
+                        .withTypeText("AspectJ keyword"),
+                    80.0
+                )
+            )
         }
     }
     
@@ -125,6 +177,4 @@ private class AspectJPointcutCompletionProvider : CompletionProvider<CompletionP
         }
     }
 }
-
-
 

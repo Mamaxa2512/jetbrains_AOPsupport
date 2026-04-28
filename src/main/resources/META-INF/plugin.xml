@@ -32,6 +32,12 @@
         <lang.syntaxHighlighterFactory language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJSyntaxHighlighterFactory"/>
         <annotator language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJAnnotator"/>
         <psi.referenceContributor language="AspectJ" implementation="org.example.aop.aspectj.AspectJReferenceContributor"/>
+        <codeInsight.lineMarkerProvider
+            language="AspectJ"
+            implementationClass="org.example.aop.aspectj.AspectJLineMarkerProvider"/>
+        <fileBasedIndex implementation="org.example.aop.aspectj.AspectJAspectIndex"/>
+        <fileBasedIndex implementation="org.example.aop.aspectj.AspectJDeclareIndex"/>
+        <fileBasedIndex implementation="org.example.aop.aspectj.AspectJInterTypeIndex"/>
         <fileBasedIndex implementation="org.example.aop.aspectj.AspectJPointcutIndex"/>
 
         <!-- Phase 3: Find Usages for AspectJ pointcuts -->

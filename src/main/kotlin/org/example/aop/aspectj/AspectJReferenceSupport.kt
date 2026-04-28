@@ -2,7 +2,9 @@
 
 package org.example.aop.aspectj
 
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.PsiManager
 import com.intellij.openapi.project.Project
@@ -11,7 +13,9 @@ import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.util.indexing.FileBasedIndex
 import org.example.aop.aspectj.AspectJFileType
+import org.example.aop.aspectj.psi.AspectDeclaration
 import org.example.aop.aspectj.psi.PointcutDeclaration
+import org.example.aop.aspectj.psi.TypeReferenceElement
 
 internal object AspectJReferenceSupport {
 
@@ -57,11 +61,7 @@ internal object AspectJReferenceSupport {
         // Fast path: use the project index of named pointcuts.
         try {
             val indexedFiles = FileBasedIndex.getInstance().getContainingFiles(AspectJPointcutIndex.NAME, pointcutName, scope)
-            println("[AspectJRef] indexedFiles=${indexedFiles.count()} for $pointcutName")
-            scanFiles(indexedFiles)?.let { found ->
-                println("[AspectJRef] found via index in ${found.containingFile.name}")
-                return found
-            }
+            scanFiles(indexedFiles)?.let { found -> return found }
         } catch (_: Throwable) {
             // ignore and continue with broader scans
         }
@@ -69,11 +69,7 @@ internal object AspectJReferenceSupport {
         // Fallback 1: all .aj files by extension.
         try {
             val filesByExt = FilenameIndex.getAllFilesByExt(project, "aj", broadScope)
-            println("[AspectJRef] filesByExt=${filesByExt.count()} for $pointcutName")
-            scanFiles(filesByExt)?.let { found ->
-                println("[AspectJRef] found via ext in ${found.containingFile.name}")
-                return found
-            }
+            scanFiles(filesByExt)?.let { found -> return found }
         } catch (_: Throwable) {
             // ignore and continue
         }
@@ -81,17 +77,14 @@ internal object AspectJReferenceSupport {
         // Fallback 2: all files associated with AspectJFileType.
         try {
             val filesByType = FileTypeIndex.getFiles(AspectJFileType, broadScope)
-            println("[AspectJRef] filesByType=${filesByType.count()} for $pointcutName")
-            scanFiles(filesByType)?.let { found ->
-                println("[AspectJRef] found via filetype in ${found.containingFile.name}")
-                return found
-            }
+            scanFiles(filesByType)?.let { found -> return found }
         } catch (_: Throwable) {
             // ignore and continue
         }
 
         // Last resort: walk the project VFS and inspect any .aj files we find.
-        val base = project.baseDir ?: return null
+        val basePath = project.basePath ?: return null
+        val base = LocalFileSystem.getInstance().findFileByPath(basePath) ?: return null
         fun visit(vf: com.intellij.openapi.vfs.VirtualFile): PointcutDeclaration? {
             if (vf.isDirectory) {
                 for (child in vf.children) {
@@ -109,21 +102,40 @@ internal object AspectJReferenceSupport {
     }
 
     fun collectPointcutNamesInProject(project: Project): Set<String> {
-        val names = linkedSetOf<String>()
-        try {
-            FileBasedIndex.getInstance().processAllKeys(
-                AspectJPointcutIndex.NAME,
-                { key: String ->
-                    names += key
-                    true
-                },
-                GlobalSearchScope.projectScope(project),
-                null
-            )
-        } catch (_: Throwable) {
-            // ignore and return what we have
+        return collectIndexedKeys(project, AspectJPointcutIndex.NAME)
+    }
+
+    fun collectAspectNamesInProject(project: Project): Set<String> =
+        collectIndexedKeys(project, AspectJAspectIndex.NAME)
+
+    fun collectDeclareKindsInProject(project: Project): Set<String> =
+        collectIndexedKeys(project, AspectJDeclareIndex.NAME)
+
+    fun collectInterTypeTargetsInProject(project: Project): Set<String> =
+        collectIndexedKeys(project, AspectJInterTypeIndex.NAME)
+
+    fun findAspectDeclarationInProject(project: Project, aspectName: String): AspectDeclaration? {
+        val scope = GlobalSearchScope.projectScope(project)
+        val psiManager = PsiManager.getInstance(project)
+        return FileBasedIndex.getInstance()
+            .getContainingFiles(AspectJAspectIndex.NAME, aspectName, scope)
+            .asSequence()
+            .mapNotNull { psiManager.findFile(it) }
+            .flatMap { file -> PsiTreeUtil.findChildrenOfType(file, AspectDeclaration::class.java).asSequence() }
+            .firstOrNull { it.getAspectName() == aspectName }
+    }
+
+    fun resolveTypeReference(typeReference: TypeReferenceElement): PsiElement? {
+        val normalized = AspectJIndexSupport.normalizeQualifiedTypeName(typeReference.text) ?: return null
+        val project = typeReference.project
+        val scope = GlobalSearchScope.allScope(project)
+        val facade = com.intellij.psi.JavaPsiFacade.getInstance(project)
+        if ('.' in normalized) {
+            facade.findClasses(normalized, scope).firstOrNull()?.let { return it }
         }
-        return names
+        return com.intellij.psi.search.PsiShortNamesCache.getInstance(project)
+            .getClassesByName(normalized.substringAfterLast('.'), scope)
+            .firstOrNull()
     }
 
     /**
@@ -146,8 +158,22 @@ internal object AspectJReferenceSupport {
         while (i >= 0 && text[i].isWhitespace()) i--
         return if (i >= 0) text[i] else null
     }
+
+    private fun collectIndexedKeys(project: Project, indexName: com.intellij.util.indexing.ID<String, Void>): Set<String> {
+        val names = linkedSetOf<String>()
+        try {
+            FileBasedIndex.getInstance().processAllKeys(
+                indexName,
+                { key: String ->
+                    names += key
+                    true
+                },
+                GlobalSearchScope.projectScope(project),
+                null
+            )
+        } catch (_: Throwable) {
+            // ignore and return what we have
+        }
+        return names
+    }
 }
-
-
-
-

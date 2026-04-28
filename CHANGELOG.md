@@ -7,14 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0-beta.1] - 2026-04-28
+
+### Added
+- Native AspectJ `.aj` PSI for `privileged aspect`, per-clauses, `declare` statements, and basic inter-type declarations.
+- Project indexes for aspect names, pointcut names, `declare` kinds, and inter-type target types.
+- Type references for `declare parents` and inter-type target types.
+- `.aj` gutter markers for aspects, pointcuts, advice, `declare` statements, inter-type declarations, and per-clauses.
+- Hover documentation for `declare` statements and per-clauses.
+- AspectJ inspections for unresolved `declare parents` types, unresolved inter-type target types, and empty `declare warning/error` messages.
+
+### Improved
+- AspectJ completion now suggests `declare` kinds, per-clauses, and structural keywords in `.aj` files.
+- The AspectJ parser now distinguishes modified pointcut declarations from inter-type declarations.
+- Inter-type target indexing now normalizes declarations that include return types like `void com.example.Service`.
+- AspectJ annotator now focuses on semantic diagnostics instead of regex-based keyword coloring.
+
 ### Fixed
 - AspectJ lexer now emits whitespace tokens so punctuation is tokenized cleanly and pointcut expressions parse reliably.
 - Cross-file pointcut reference parsing no longer drops named designators in advice expressions.
-
-### Improved
-- Registered the AspectJ file type via the modern `fileType` extension for consistent `.aj` recognition.
-- Startup association of `.aj` extension is now wrapped in a write action for thread safety.
-- Test fixture setup explicitly registers the AspectJ parser definition and file type.
 
 ## [1.1.0-beta.1] - 2026-04-26
 
@@ -83,6 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI pipeline with build, static checks, and plugin verifier
 - Compatibility matrix documented
 
-[Unreleased]: https://github.com/anonim/aop-support/compare/v1.1.0-beta.1...HEAD
+[Unreleased]: https://github.com/anonim/aop-support/compare/v1.2.0-beta.1...HEAD
+[1.2.0-beta.1]: https://github.com/anonim/aop-support/releases/tag/v1.2.0-beta.1
 [1.1.0-beta.1]: https://github.com/anonim/aop-support/releases/tag/v1.1.0-beta.1
 [1.0.0-beta.1]: https://github.com/anonim/aop-support/releases/tag/v1.0.0-beta.1

@@ -8,6 +8,16 @@ import org.example.aop.aspectj.AspectJLanguage
 object AspectJElementTypes {
 	// File-level elements
 	val ASPECT_DECLARATION = IElementType("AJ_ASPECT_DECLARATION", AspectJLanguage)
+	val PER_CLAUSE = IElementType("AJ_PER_CLAUSE", AspectJLanguage)
+	val DECLARE_STATEMENT = IElementType("AJ_DECLARE_STATEMENT", AspectJLanguage)
+	val DECLARE_PARENTS = IElementType("AJ_DECLARE_PARENTS", AspectJLanguage)
+	val DECLARE_WARNING = IElementType("AJ_DECLARE_WARNING", AspectJLanguage)
+	val DECLARE_ERROR = IElementType("AJ_DECLARE_ERROR", AspectJLanguage)
+	val DECLARE_SOFT = IElementType("AJ_DECLARE_SOFT", AspectJLanguage)
+	val DECLARE_PRECEDENCE = IElementType("AJ_DECLARE_PRECEDENCE", AspectJLanguage)
+	val INTER_TYPE_DECLARATION = IElementType("AJ_INTER_TYPE_DECLARATION", AspectJLanguage)
+	val TYPE_REFERENCE = IElementType("AJ_TYPE_REFERENCE", AspectJLanguage)
+	val DECLARE_MESSAGE = IElementType("AJ_DECLARE_MESSAGE", AspectJLanguage)
 
 	// Advice and Pointcuts
 	val ADVICE_DECLARATION = IElementType("AJ_ADVICE_DECLARATION", AspectJLanguage)
@@ -35,4 +45,3 @@ object AspectJElementTypes {
 	// Forward compatibility
 	val IDENTIFIER = IElementType("AJ_IDENTIFIER", AspectJLanguage)
 }
-

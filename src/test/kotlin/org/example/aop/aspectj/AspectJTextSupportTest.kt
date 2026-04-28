@@ -52,7 +52,20 @@ class AspectJTextSupportTest {
         val offset = text.length
         assertEquals("exec", AspectJTextSupport.extractCompletionPrefix(text, offset))
     }
-}
 
+    @Test
+    fun `detects declare completion context`() {
+        val text = "declare war"
+        assertTrue(AspectJTextSupport.isDeclareContext(text, text.length))
+        assertFalse(AspectJTextSupport.isDeclareContext("before() : execution(* *(..))", 5))
+    }
+
+    @Test
+    fun `detects aspect header context for per clauses`() {
+        val text = "privileged aspect AuditAspect per"
+        assertTrue(AspectJTextSupport.isAspectHeaderContext(text, text.length))
+        assertFalse(AspectJTextSupport.isAspectHeaderContext("aspect AuditAspect {", "aspect AuditAspect {".length))
+    }
+}
 
 

@@ -101,7 +101,15 @@ class AspectJLexer : LexerBase() {
                 while (i < endOffset && isIdentifierPart(buffer[i])) i++
                 val word = buffer.subSequence(tokenStart, i).toString()
                 val lower = word.lowercase()
-                setToken(if (lower in AspectJTokenTypes.KEYWORDS) AspectJTokenTypes.KEYWORD else AspectJTokenTypes.IDENTIFIER, i)
+                setToken(keywordTokenType(lower), i)
+            }
+            startsWith("&&", i) || startsWith("||", i) -> {
+                i += 2
+                setToken(AspectJTokenTypes.OPERATOR, i)
+            }
+            ch in setOf('!', '*', '+', '=') -> {
+                i++
+                setToken(AspectJTokenTypes.OPERATOR, i)
             }
             else -> {
                 i++
@@ -113,6 +121,29 @@ class AspectJLexer : LexerBase() {
     private fun setToken(type: IElementType, end: Int) {
         tokenType = type
         tokenEnd = end
+    }
+
+    private fun keywordTokenType(keyword: String): IElementType {
+        return when {
+            keyword in AspectJTokenTypes.ASPECT_KEYWORDS -> AspectJTokenTypes.ASPECT_KEYWORD
+            keyword in AspectJTokenTypes.POINTCUT_KEYWORDS -> AspectJTokenTypes.POINTCUT_KEYWORD
+            keyword in AspectJTokenTypes.ADVICE_KEYWORDS -> AspectJTokenTypes.ADVICE_KEYWORD
+            keyword in AspectJTokenTypes.DESIGNATOR_KEYWORDS -> AspectJTokenTypes.DESIGNATOR_KEYWORD
+            keyword in AspectJTokenTypes.DECLARE_KEYWORDS -> AspectJTokenTypes.DECLARE_KEYWORD
+            keyword in AspectJTokenTypes.DECLARE_KIND_KEYWORDS -> AspectJTokenTypes.DECLARE_KIND_KEYWORD
+            keyword in AspectJTokenTypes.PER_CLAUSE_KEYWORDS -> AspectJTokenTypes.PER_CLAUSE_KEYWORD
+            keyword in AspectJTokenTypes.MODIFIER_KEYWORDS -> AspectJTokenTypes.MODIFIER_KEYWORD
+            keyword in AspectJTokenTypes.KEYWORDS -> AspectJTokenTypes.KEYWORD
+            else -> AspectJTokenTypes.IDENTIFIER
+        }
+    }
+
+    private fun startsWith(expected: String, offset: Int): Boolean {
+        if (offset + expected.length > endOffset) return false
+        for (index in expected.indices) {
+            if (buffer[offset + index] != expected[index]) return false
+        }
+        return true
     }
 
     private fun isIdentifierStart(ch: Char): Boolean = ch == '_' || ch == '$' || ch.isLetter()

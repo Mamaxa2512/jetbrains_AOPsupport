@@ -23,6 +23,16 @@ class AspectJParserDefinition : ParserDefinition {
     override fun createElement(node: ASTNode): PsiElement {
         return when (node.elementType) {
             AspectJElementTypes.ASPECT_DECLARATION -> AspectDeclaration(node)
+            AspectJElementTypes.PER_CLAUSE -> PerClause(node)
+            AspectJElementTypes.DECLARE_STATEMENT -> DeclareStatement(node)
+            AspectJElementTypes.DECLARE_PARENTS -> DeclareParentsDeclaration(node)
+            AspectJElementTypes.DECLARE_WARNING -> DeclareWarningDeclaration(node)
+            AspectJElementTypes.DECLARE_ERROR -> DeclareErrorDeclaration(node)
+            AspectJElementTypes.DECLARE_SOFT -> DeclareSoftDeclaration(node)
+            AspectJElementTypes.DECLARE_PRECEDENCE -> DeclarePrecedenceDeclaration(node)
+            AspectJElementTypes.INTER_TYPE_DECLARATION -> InterTypeDeclaration(node)
+            AspectJElementTypes.TYPE_REFERENCE -> TypeReferenceElement(node)
+            AspectJElementTypes.DECLARE_MESSAGE -> DeclareMessage(node)
             AspectJElementTypes.ADVICE_DECLARATION -> AdviceDeclaration(node)
             AspectJElementTypes.POINTCUT_DECLARATION -> PointcutDeclaration(node)
             AspectJElementTypes.POINTCUT_EXPRESSION -> PointcutExpression(node)
@@ -35,5 +45,4 @@ class AspectJParserDefinition : ParserDefinition {
     override fun createFile(viewProvider: FileViewProvider): PsiFile = AspectJPsiFile(viewProvider)
     override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements = ParserDefinition.SpaceRequirements.MAY
 }
-
 
