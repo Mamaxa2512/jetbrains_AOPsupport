@@ -82,3 +82,4 @@ org.jetbrains.kotlin.idea.stubindex.KotlinScriptFqnIndex
 KotlinTypeAliasByExpansionShortNameIndex
 KotlinOverridableInternalMembersShortNameIndex
 org.jetbrains.kotlin.idea.stubindex.KotlinSubclassObjectNameIndex
+org.example.aop.aspectj.pointcut.index

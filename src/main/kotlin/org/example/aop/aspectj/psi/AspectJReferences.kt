@@ -25,17 +25,15 @@ class AspectJPointcutReference(
     override fun resolve(): PsiElement? {
         val file = element.containingFile
         AspectJReferenceSupport.findPointcutDeclaration(file, referenceName)
-            ?.nameIdentifier
-            ?.let { return it }
+            ?.let { decl -> return decl.nameIdentifier ?: decl }
 
         AspectJReferenceSupport.findPointcutDeclarationInProject(file.project, referenceName)
-            ?.nameIdentifier
-            ?.let { return it }
+            ?.let { decl -> return decl.nameIdentifier ?: decl }
 
         return file.let {
             PsiTreeUtil.findChildrenOfType(it, PointcutDeclaration::class.java)
                 .firstOrNull { decl -> decl.getPointcutName() == referenceName }
-                ?.nameIdentifier
+                ?.let { decl -> decl.nameIdentifier ?: decl }
         }
     }
 

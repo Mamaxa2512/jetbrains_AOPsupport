@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- AspectJ lexer now emits whitespace tokens so punctuation is tokenized cleanly and pointcut expressions parse reliably.
+- Cross-file pointcut reference parsing no longer drops named designators in advice expressions.
+
+### Improved
+- Registered the AspectJ file type via the modern `fileType` extension for consistent `.aj` recognition.
+- Startup association of `.aj` extension is now wrapped in a write action for thread safety.
+- Test fixture setup explicitly registers the AspectJ parser definition and file type.
+
 ## [1.1.0-beta.1] - 2026-04-26
 
 ### Added

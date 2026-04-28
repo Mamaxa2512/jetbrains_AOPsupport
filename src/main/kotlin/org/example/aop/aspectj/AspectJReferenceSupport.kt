@@ -8,6 +8,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.FilenameIndex
+import com.intellij.psi.search.FileTypeIndex
 import com.intellij.util.indexing.FileBasedIndex
 import org.example.aop.aspectj.AspectJFileType
 import org.example.aop.aspectj.psi.PointcutDeclaration
@@ -41,57 +42,70 @@ internal object AspectJReferenceSupport {
      */
     fun findPointcutDeclarationInProject(project: Project, pointcutName: String): PointcutDeclaration? {
         val scope = GlobalSearchScope.projectScope(project)
+        val broadScope = GlobalSearchScope.everythingScope(project)
         val psiManager = PsiManager.getInstance(project)
 
-        // Fast path: use the project index of named pointcuts.
-        try {
-            val files = FileBasedIndex.getInstance().getContainingFiles(AspectJPointcutIndex.NAME, pointcutName, scope)
+        fun scanFiles(files: Iterable<com.intellij.openapi.vfs.VirtualFile>): PointcutDeclaration? {
             for (vf in files) {
                 val psi = psiManager.findFile(vf) ?: continue
                 val decl = findPointcutDeclaration(psi, pointcutName)
                 if (decl != null) return decl
             }
-        } catch (_: Throwable) {
-            // ignore and fallback to direct scans
-        }
-
-        // Fallback: scan all AspectJ files in the project scope.
-        try {
-            val filenameFiles = FilenameIndex.getAllFilesByExt(project, "aj", scope)
-            for (vf in filenameFiles) {
-                val psi = psiManager.findFile(vf) ?: continue
-                val decl = findPointcutDeclaration(psi, pointcutName)
-                if (decl != null) return decl
-            }
-
-            val filesByType = com.intellij.psi.search.FileTypeIndex.getFiles(AspectJFileType, scope)
-            for (vf in filesByType) {
-                val psi = psiManager.findFile(vf) ?: continue
-                val decl = findPointcutDeclaration(psi, pointcutName)
-                if (decl != null) return decl
-            }
-
-            val base = project.baseDir
-            if (base != null) {
-                fun visit(vf: com.intellij.openapi.vfs.VirtualFile): PointcutDeclaration? {
-                    if (vf.isDirectory) {
-                        for (child in vf.children) {
-                            val found = visit(child)
-                            if (found != null) return found
-                        }
-                    } else if (vf.extension == "aj") {
-                        val psi = psiManager.findFile(vf) ?: return null
-                        val decl = findPointcutDeclaration(psi, pointcutName)
-                        if (decl != null) return decl
-                    }
-                    return null
-                }
-                return visit(base)
-            }
-        } catch (_: Throwable) {
             return null
         }
-        return null
+
+        // Fast path: use the project index of named pointcuts.
+        try {
+            val indexedFiles = FileBasedIndex.getInstance().getContainingFiles(AspectJPointcutIndex.NAME, pointcutName, scope)
+            println("[AspectJRef] indexedFiles=${indexedFiles.count()} for $pointcutName")
+            scanFiles(indexedFiles)?.let { found ->
+                println("[AspectJRef] found via index in ${found.containingFile.name}")
+                return found
+            }
+        } catch (_: Throwable) {
+            // ignore and continue with broader scans
+        }
+
+        // Fallback 1: all .aj files by extension.
+        try {
+            val filesByExt = FilenameIndex.getAllFilesByExt(project, "aj", broadScope)
+            println("[AspectJRef] filesByExt=${filesByExt.count()} for $pointcutName")
+            scanFiles(filesByExt)?.let { found ->
+                println("[AspectJRef] found via ext in ${found.containingFile.name}")
+                return found
+            }
+        } catch (_: Throwable) {
+            // ignore and continue
+        }
+
+        // Fallback 2: all files associated with AspectJFileType.
+        try {
+            val filesByType = FileTypeIndex.getFiles(AspectJFileType, broadScope)
+            println("[AspectJRef] filesByType=${filesByType.count()} for $pointcutName")
+            scanFiles(filesByType)?.let { found ->
+                println("[AspectJRef] found via filetype in ${found.containingFile.name}")
+                return found
+            }
+        } catch (_: Throwable) {
+            // ignore and continue
+        }
+
+        // Last resort: walk the project VFS and inspect any .aj files we find.
+        val base = project.baseDir ?: return null
+        fun visit(vf: com.intellij.openapi.vfs.VirtualFile): PointcutDeclaration? {
+            if (vf.isDirectory) {
+                for (child in vf.children) {
+                    val found = visit(child)
+                    if (found != null) return found
+                }
+            } else if (vf.extension == "aj") {
+                val psi = psiManager.findFile(vf) ?: return null
+                val decl = findPointcutDeclaration(psi, pointcutName)
+                if (decl != null) return decl
+            }
+            return null
+        }
+        return visit(base)
     }
 
     fun collectPointcutNamesInProject(project: Project): Set<String> {

@@ -1,6 +1,7 @@
 package org.example.aop.aspectj
 
 import com.intellij.lexer.LexerBase
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 
 class AspectJLexer : LexerBase() {
@@ -37,12 +38,18 @@ class AspectJLexer : LexerBase() {
 
     private fun locateToken(position: Int) {
         var i = position
-        while (i < endOffset && buffer[i].isWhitespace()) i++
         tokenStart = i
 
         if (i >= endOffset) {
             tokenType = null
             tokenEnd = endOffset
+            return
+        }
+
+        if (buffer[i].isWhitespace()) {
+            i++
+            while (i < endOffset && buffer[i].isWhitespace()) i++
+            setToken(TokenType.WHITE_SPACE, i)
             return
         }
 
@@ -111,5 +118,3 @@ class AspectJLexer : LexerBase() {
     private fun isIdentifierStart(ch: Char): Boolean = ch == '_' || ch == '$' || ch.isLetter()
     private fun isIdentifierPart(ch: Char): Boolean = isIdentifierStart(ch) || ch.isDigit()
 }
-
-

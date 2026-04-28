@@ -1,11 +1,35 @@
 package org.example.aop.aspectj
 
+import com.intellij.lang.LanguageParserDefinitions
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.fileTypes.FileTypeManager
+import com.intellij.openapi.util.Disposer
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.psi.util.PsiTreeUtil
 import org.example.aop.aspectj.psi.AspectJPointcutReference
 import org.example.aop.aspectj.psi.DesignatorReference
 
 class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
+
+	private var parserDefinition: AspectJParserDefinition? = null
+
+	override fun setUp() {
+		super.setUp()
+		parserDefinition = AspectJParserDefinition().also { definition ->
+			LanguageParserDefinitions.INSTANCE.addExplicitExtension(AspectJLanguage, definition)
+			Disposer.register(testRootDisposable) {
+				LanguageParserDefinitions.INSTANCE.removeExplicitExtension(AspectJLanguage, definition)
+			}
+		}
+		val fileTypeManager = FileTypeManager.getInstance()
+		val alreadyRegistered = fileTypeManager.getAssociations(AspectJFileType)
+			.any { matcher -> matcher.acceptsCharSequence("Sample.aj") }
+		if (!alreadyRegistered) {
+			ApplicationManager.getApplication().runWriteAction {
+				fileTypeManager.associateExtension(AspectJFileType, "aj")
+			}
+		}
+	}
 
 	fun testPointcutReferenceResolvesAcrossFiles() {
 		val declaration = myFixture.addFileToProject(
@@ -17,8 +41,8 @@ class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
 			""".trimIndent()
 		)
 
-		val usage = myFixture.addFileToProject(
-			"Use.aj",
+		myFixture.configureByText(
+			AspectJFileType,
 			"""
 				aspect UseAspect {
 					before() : sharedPointcut() { }
@@ -26,7 +50,6 @@ class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
 			""".trimIndent()
 		)
 
-		myFixture.configureFromExistingVirtualFile(usage.virtualFile)
 		val designator = PsiTreeUtil.findChildrenOfType(myFixture.file, DesignatorReference::class.java)
 			.firstOrNull { it.referenceName == "sharedPointcut" }
 
@@ -49,8 +72,8 @@ class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
 			""".trimIndent()
 		)
 
-		val usage = myFixture.addFileToProject(
-			"Use.aj",
+		myFixture.configureByText(
+			AspectJFileType,
 			"""
 				aspect UseAspect {
 					before() : sharedPointcut() { }
@@ -58,7 +81,6 @@ class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
 			""".trimIndent()
 		)
 
-		myFixture.configureFromExistingVirtualFile(usage.virtualFile)
 		myFixture.enableInspections(AspectJInspection())
 
 		val highlightInfos = myFixture.doHighlighting()
@@ -68,14 +90,3 @@ class AspectJCrossFileReferenceTest : BasePlatformTestCase() {
 		)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-

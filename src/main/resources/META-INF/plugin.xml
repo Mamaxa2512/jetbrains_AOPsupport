@@ -23,7 +23,11 @@
         <projectActivity implementation="org.example.aop.AopPlugin"/>
 
         <!-- Native AspectJ `.aj` support -->
-        <fileTypeFactory implementation="org.example.aop.aspectj.AspectJFileTypeFactory"/>
+        <fileType name="AspectJ"
+                 language="AspectJ"
+                 implementationClass="org.example.aop.aspectj.AspectJFileType"
+                 fieldName="INSTANCE"
+                 extensions="aj"/>
         <lang.parserDefinition language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJParserDefinition"/>
         <lang.syntaxHighlighterFactory language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJSyntaxHighlighterFactory"/>
         <annotator language="AspectJ" implementationClass="org.example.aop.aspectj.AspectJAnnotator"/>
