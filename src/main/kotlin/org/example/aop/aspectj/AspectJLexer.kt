@@ -89,7 +89,12 @@ class AspectJLexer : LexerBase() {
                     i++
                     while (i < endOffset && isIdentifierPart(buffer[i])) i++
                 }
-                setToken(AspectJTokenTypes.ANNOTATION, i)
+                val word = buffer.subSequence(tokenStart, i).toString().lowercase()
+                if (word in AspectJTokenTypes.DESIGNATOR_KEYWORDS) {
+                    setToken(AspectJTokenTypes.DESIGNATOR_KEYWORD, i)
+                } else {
+                    setToken(AspectJTokenTypes.ANNOTATION, i)
+                }
             }
             ch.isDigit() -> {
                 i++
@@ -101,15 +106,47 @@ class AspectJLexer : LexerBase() {
                 while (i < endOffset && isIdentifierPart(buffer[i])) i++
                 val word = buffer.subSequence(tokenStart, i).toString()
                 val lower = word.lowercase()
-                setToken(keywordTokenType(lower), i)
+                setToken(identifierOrClassRef(word, keywordTokenType(lower)), i)
             }
             startsWith("&&", i) || startsWith("||", i) -> {
                 i += 2
                 setToken(AspectJTokenTypes.OPERATOR, i)
             }
-            ch in setOf('!', '*', '+', '=') -> {
+            ch in setOf('!', '*', '+', '=', '<', '>') -> {
                 i++
                 setToken(AspectJTokenTypes.OPERATOR, i)
+            }
+            ch == ';' -> {
+                i++
+                setToken(AspectJTokenTypes.SEMICOLON, i)
+            }
+            ch == '{' -> {
+                i++
+                setToken(AspectJTokenTypes.LBRACE, i)
+            }
+            ch == '}' -> {
+                i++
+                setToken(AspectJTokenTypes.RBRACE, i)
+            }
+            ch == '(' -> {
+                i++
+                setToken(AspectJTokenTypes.LPAREN, i)
+            }
+            ch == ')' -> {
+                i++
+                setToken(AspectJTokenTypes.RPAREN, i)
+            }
+            ch == '.' -> {
+                i++
+                setToken(AspectJTokenTypes.DOT, i)
+            }
+            ch == ',' -> {
+                i++
+                setToken(AspectJTokenTypes.COMMA, i)
+            }
+            ch == ':' -> {
+                i++
+                setToken(AspectJTokenTypes.PUNCTUATION, i)
             }
             else -> {
                 i++
@@ -133,8 +170,23 @@ class AspectJLexer : LexerBase() {
             keyword in AspectJTokenTypes.DECLARE_KIND_KEYWORDS -> AspectJTokenTypes.DECLARE_KIND_KEYWORD
             keyword in AspectJTokenTypes.PER_CLAUSE_KEYWORDS -> AspectJTokenTypes.PER_CLAUSE_KEYWORD
             keyword in AspectJTokenTypes.MODIFIER_KEYWORDS -> AspectJTokenTypes.MODIFIER_KEYWORD
+            keyword in AspectJTokenTypes.PRIMITIVE_TYPES -> AspectJTokenTypes.PRIMITIVE_TYPE
+            keyword in AspectJTokenTypes.JAVA_KEYWORD_SET -> AspectJTokenTypes.JAVA_KEYWORD
             keyword in AspectJTokenTypes.KEYWORDS -> AspectJTokenTypes.KEYWORD
             else -> AspectJTokenTypes.IDENTIFIER
+        }
+    }
+
+    /**
+     * Determines the token type for an identifier word, considering case conventions.
+     * Uppercase-starting identifiers (Object, String, Account) get CLASS_REFERENCE type.
+     */
+    private fun identifierOrClassRef(word: String, keywordType: IElementType): IElementType {
+        if (keywordType != AspectJTokenTypes.IDENTIFIER) return keywordType
+        return if (word.isNotEmpty() && word[0].isUpperCase()) {
+            AspectJTokenTypes.CLASS_REFERENCE
+        } else {
+            AspectJTokenTypes.IDENTIFIER
         }
     }
 

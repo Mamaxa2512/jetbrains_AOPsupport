@@ -70,4 +70,47 @@ class AspectJInspectionFixtureTest : BasePlatformTestCase() {
         )
         myFixture.checkHighlighting(false, false, false)
     }
+
+    fun testDeclarePrecedenceRequiresAtLeastTwoEntries() {
+        myFixture.enableInspections(AspectJInspection())
+        myFixture.configureByText(
+            AspectJFileType,
+            """
+                aspect OrderingAspect {
+                    <warning descr="declare precedence must define at least two type patterns">declare precedence : com.example..*;</warning>
+                }
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    fun testDeclarePrecedenceRejectsDuplicates() {
+        myFixture.enableInspections(AspectJInspection())
+        myFixture.configureByText(
+            AspectJFileType,
+            """
+                aspect OrderingAspect {
+                    declare precedence : com.example..*, <warning descr="Duplicate precedence entry 'com.example..*'">com.example..*</warning>;
+                }
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
+
+    fun testInterTypeMethodRequiresReturnType() {
+        myFixture.addFileToProject(
+            "src/com/example/Service.java",
+            "package com.example; public class Service {}"
+        )
+        myFixture.enableInspections(AspectJInspection())
+        myFixture.configureByText(
+            AspectJFileType,
+            """
+                aspect ItdAspect {
+                    <warning descr="Inter-type method declaration must declare a return type">com.example.Service.audit() { }</warning>
+                }
+            """.trimIndent()
+        )
+        myFixture.checkHighlighting(false, false, false)
+    }
 }

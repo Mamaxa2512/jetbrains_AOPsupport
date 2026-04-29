@@ -48,6 +48,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    maxHeapSize = "2g"
 }
 
 intellijPlatform {

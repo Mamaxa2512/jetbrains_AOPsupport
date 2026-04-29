@@ -42,6 +42,10 @@ object AspectJElementTypes {
 	// Modifiers and identifiers
 	val MODIFIER = IElementType("AJ_MODIFIER", AspectJLanguage)
 
-	// Forward compatibility
 	val IDENTIFIER = IElementType("AJ_IDENTIFIER", AspectJLanguage)
+
+	// Generics and patterns
+	val TYPE_PARAMETER = IElementType("AJ_TYPE_PARAMETER", AspectJLanguage)
+	val TYPE_ARGUMENT = IElementType("AJ_TYPE_ARGUMENT", AspectJLanguage)
+	val ANNOTATION_PATTERN = IElementType("AJ_ANNOTATION_PATTERN", AspectJLanguage)
 }

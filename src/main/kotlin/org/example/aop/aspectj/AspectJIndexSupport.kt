@@ -35,6 +35,12 @@ internal object AspectJIndexSupport {
             .filter { it.isNotBlank() }
             .toSet()
 
+    fun adviceTypes(file: PsiFile): Set<String> =
+        PsiTreeUtil.findChildrenOfType(file, org.example.aop.aspectj.psi.AdviceDeclaration::class.java)
+            .mapNotNull { it.getAdviceType() }
+            .filter { it.isNotBlank() }
+            .toSet()
+
     fun declareKeys(file: PsiFile): Set<String> =
         PsiTreeUtil.findChildrenOfType(file, DeclareStatement::class.java)
             .mapNotNull { declarationKind(it) }

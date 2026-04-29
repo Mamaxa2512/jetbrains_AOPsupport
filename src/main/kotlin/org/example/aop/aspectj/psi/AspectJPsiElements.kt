@@ -6,6 +6,7 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiDocumentManager
+import org.example.aop.aspectj.AspectJTokenTypes
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.util.PsiTreeUtil
@@ -24,7 +25,8 @@ class AspectDeclaration(node: ASTNode) : AspectJPsiElement(node) {
 	fun getAspectName(): String? {
 		var child = firstChild
 		while (child != null) {
-			if (child.node?.elementType?.toString()?.contains("IDENTIFIER") == true) {
+			if (child.node?.elementType == AspectJTokenTypes.IDENTIFIER ||
+				child.node?.elementType == AspectJTokenTypes.CLASS_REFERENCE) {
 				return child.text
 			}
 			child = child.nextSibling
@@ -111,7 +113,8 @@ class PointcutDeclaration(node: ASTNode) : AspectJPsiElement(node), PsiNameIdent
 	override fun getNameIdentifier(): PsiElement? {
 		var child = firstChild
 		while (child != null) {
-			if (child.node?.elementType?.toString()?.contains("IDENTIFIER") == true) {
+			if (child.node?.elementType == AspectJTokenTypes.IDENTIFIER ||
+				child.node?.elementType == AspectJTokenTypes.CLASS_REFERENCE) {
 				return child
 			}
 			child = child.nextSibling
@@ -216,8 +219,46 @@ class DeclareSoftDeclaration(node: ASTNode) : DeclareStatement(node)
 class DeclarePrecedenceDeclaration(node: ASTNode) : DeclareStatement(node)
 
 class InterTypeDeclaration(node: ASTNode) : AspectJPsiElement(node) {
-	fun getTargetTypeReferences(): List<TypeReferenceElement> =
+	fun getTypeReferences(): List<TypeReferenceElement> =
 		PsiTreeUtil.getChildrenOfTypeAsList(this, TypeReferenceElement::class.java)
+
+	fun getTargetTypeReferences(): List<TypeReferenceElement> =
+		getTypeReferences().filter { reference ->
+			// ITD target references contain a dot in the raw text (e.g., Account.lastTransactionTime)
+			'.' in reference.text
+		}
+
+	fun getReturnTypeReference(): TypeReferenceElement? =
+		getTypeReferences().firstOrNull { reference ->
+			reference !== getTargetTypeReference()
+		}
+
+	fun getTargetTypeReference(): TypeReferenceElement? =
+		getTypeReferences().firstOrNull { reference ->
+			'.' in reference.text
+		}
+
+	fun getTargetQualifiedName(): String? = getTargetTypeReference()?.getNormalizedQualifiedName()
+
+	fun getDeclaredMemberName(): String? {
+		val targetReference = getTargetTypeReference() ?: return null
+		val targetText = targetReference.text
+		val normalizedTarget = targetReference.getNormalizedQualifiedName() ?: return null
+		return if (targetText == normalizedTarget) null else targetText.removePrefix("$normalizedTarget.").takeIf { it.isNotBlank() }
+	}
+
+	fun isMethodLike(): Boolean {
+		var child = firstChild
+		while (child != null) {
+			if (child.node?.elementType == AspectJElementTypes.PARAMETERS) {
+				return true
+			}
+			child = child.nextSibling
+		}
+		return false
+	}
+
+	fun isFieldLike(): Boolean = !isMethodLike()
 }
 
 class PerClause(node: ASTNode) : AspectJPsiElement(node) {
@@ -225,6 +266,10 @@ class PerClause(node: ASTNode) : AspectJPsiElement(node) {
 }
 
 class TypeReferenceElement(node: ASTNode) : AspectJPsiElement(node)
+{
+	fun getNormalizedQualifiedName(): String? =
+		org.example.aop.aspectj.AspectJIndexSupport.normalizeQualifiedTypeName(text)
+}
 
 class DeclareMessage(node: ASTNode) : AspectJPsiElement(node)
 
@@ -235,4 +280,3 @@ class DeclareMessage(node: ASTNode) : AspectJPsiElement(node)
 class DesignatorReference(node: ASTNode) : AspectJPsiElement(node) {
 	val referenceName: String? get() = text
 }
-

@@ -82,6 +82,7 @@ internal object AspectJReferenceSupport {
             // ignore and continue
         }
 
+
         // Last resort: walk the project VFS and inspect any .aj files we find.
         val basePath = project.basePath ?: return null
         val base = LocalFileSystem.getInstance().findFileByPath(basePath) ?: return null

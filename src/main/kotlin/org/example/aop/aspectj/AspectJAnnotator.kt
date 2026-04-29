@@ -10,27 +10,9 @@ import org.example.aop.inspection.PointcutParser
 
 class AspectJAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        val file = element as? PsiFile ?: return
-        if (file.language != AspectJLanguage) return
-        AspectJTextSupport.collectPointcutOccurrences(file.text).forEach { occurrence ->
-            val basicError = AopInspectionRules.validatePointcutExpressionDetailed(occurrence.expression)
-            if (basicError != null) {
-                holder.newAnnotation(HighlightSeverity.WARNING, basicError.message)
-                    .range(occurrence.range)
-                    .create()
-                return@forEach
-            }
-            val parseResult = PointcutParser.parse(occurrence.expression)
-            parseResult.errors.forEach { error ->
-                holder.newAnnotation(HighlightSeverity.ERROR, error.message)
-                    .range(occurrence.range)
-                    .create()
-            }
-            parseResult.warnings.forEach { warning ->
-                holder.newAnnotation(HighlightSeverity.WEAK_WARNING, warning.message)
-                    .range(occurrence.range)
-                    .create()
-            }
-        }
+        // Pointcut expression validation is handled by the PSI-based AspectJInspection,
+        // which correctly distinguishes user-defined pointcut references from unknown designators.
+        // The text-based validation here would generate false positives for user-defined pointcuts
+        // like serviceMethods() in: before() : serviceMethods() { }
     }
 }

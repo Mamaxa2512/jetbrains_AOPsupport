@@ -36,5 +36,44 @@ class CreatePointcutQuickFix(private val name: String) : LocalQuickFix {
         }
     }
 }
+class AddModifierQuickFix(private val modifier: String) : LocalQuickFix {
+    override fun getName(): String = "Add '$modifier' modifier"
+    override fun getFamilyName(): String = "AspectJ quick fixes"
 
+    override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
+        val element = descriptor.psiElement ?: return
+        WriteCommandAction.runWriteCommandAction(project) {
+            val document = com.intellij.psi.PsiDocumentManager.getInstance(project).getDocument(element.containingFile)
+            if (document != null) {
+                document.insertString(element.textRange.startOffset, "$modifier ")
+                com.intellij.psi.PsiDocumentManager.getInstance(project).commitDocument(document)
+            }
+        }
+    }
+}
+
+class AddReturningClauseQuickFix(private val clauseName: String, private val defaultParam: String) : LocalQuickFix {
+    override fun getName(): String = "Add '$clauseName($defaultParam)' clause"
+    override fun getFamilyName(): String = "AspectJ quick fixes"
+
+    override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
+        val element = descriptor.psiElement ?: return
+        WriteCommandAction.runWriteCommandAction(project) {
+            val document = com.intellij.psi.PsiDocumentManager.getInstance(project).getDocument(element.containingFile)
+            if (document != null) {
+                // insert it after the advice parameters or pointcut expression. 
+                // A simple approach is to append to the end of the element before the block '{' or ';'
+                // Since this might be tricky, we'll append it just before the `{` or `;` if we can find it.
+                val text = element.text
+                val blockIndex = text.indexOf('{')
+                val semicolonIndex = text.indexOf(';')
+                val insertIndex = if (blockIndex != -1) blockIndex else if (semicolonIndex != -1) semicolonIndex else text.length
+                
+                val insertOffset = element.textRange.startOffset + insertIndex
+                document.insertString(insertOffset, " $clauseName($defaultParam) ")
+                com.intellij.psi.PsiDocumentManager.getInstance(project).commitDocument(document)
+            }
+        }
+    }
+}
 

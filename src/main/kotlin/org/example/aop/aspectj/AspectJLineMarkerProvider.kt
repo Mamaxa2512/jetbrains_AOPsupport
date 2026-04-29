@@ -18,21 +18,46 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
         element: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        when (element) {
-            is AspectDeclaration -> markAspect(element, result)
-            is PointcutDeclaration -> markPointcut(element, result)
-            is AdviceDeclaration -> markAdvice(element, result)
-            is DeclareStatement -> markDeclare(element, result)
-            is InterTypeDeclaration -> markInterType(element, result)
-            is PerClause -> markPerClause(element, result)
+        // Line markers must be registered on LEAF elements only.
+        // We detect the parent composite type via the leaf's parent chain.
+        if (element.firstChild != null) return // skip composite nodes
+
+        val parent = element.parent ?: return
+        when (parent) {
+            is AspectDeclaration -> {
+                if (element == findFirstLeaf(parent)) markAspect(parent, element, result)
+            }
+            is PointcutDeclaration -> {
+                if (element == findFirstLeaf(parent)) markPointcut(parent, element, result)
+            }
+            is AdviceDeclaration -> {
+                if (element == findFirstLeaf(parent)) markAdvice(parent, element, result)
+            }
+            is DeclareStatement -> {
+                if (element == findFirstLeaf(parent)) markDeclare(parent, element, result)
+            }
+            is InterTypeDeclaration -> {
+                if (element == findFirstLeaf(parent)) markInterType(parent, element, result)
+            }
+            is PerClause -> {
+                if (element == findFirstLeaf(parent)) markPerClause(parent, element, result)
+            }
         }
+    }
+
+    private fun findFirstLeaf(element: PsiElement): PsiElement? {
+        var current: PsiElement? = element
+        while (current != null && current.firstChild != null) {
+            current = current.firstChild
+        }
+        return current
     }
 
     private fun markAspect(
         aspect: AspectDeclaration,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = aspect.nameIdentifierLike() ?: return
         val targets = aspect.getAdviceDeclarations() + aspect.getPointcutDeclarations() +
             aspect.getDeclareStatements() + aspect.getInterTypeDeclarations()
         if (targets.isEmpty()) return
@@ -46,9 +71,9 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     private fun markPointcut(
         pointcut: PointcutDeclaration,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = pointcut.nameIdentifier ?: return
         val target = PsiTreeUtil.getParentOfType(pointcut, AspectDeclaration::class.java) ?: pointcut
         result.add(
             NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod)
@@ -60,9 +85,9 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     private fun markAdvice(
         advice: AdviceDeclaration,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = advice.firstChild ?: return
         val aspect = PsiTreeUtil.getParentOfType(advice, AspectDeclaration::class.java)
         val targets = listOfNotNull(aspect).ifEmpty { listOf(advice) }
         result.add(
@@ -75,12 +100,11 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     private fun markDeclare(
         statement: DeclareStatement,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = statement.firstChild ?: return
-        val targets = statement.children.filter { it !== anchor }.toList().ifEmpty {
-            listOfNotNull(PsiTreeUtil.getParentOfType(statement, AspectDeclaration::class.java))
-        }
+        val targets = listOfNotNull(PsiTreeUtil.getParentOfType(statement, AspectDeclaration::class.java))
+            .ifEmpty { listOf(statement) }
         result.add(
             NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod)
                 .setTargets(targets)
@@ -91,9 +115,9 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     private fun markInterType(
         declaration: InterTypeDeclaration,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = declaration.firstChild ?: return
         val targets = declaration.getTargetTypeReferences()
             .mapNotNull { AspectJReferenceSupport.resolveTypeReference(it) }
             .ifEmpty { listOfNotNull(PsiTreeUtil.getParentOfType(declaration, AspectDeclaration::class.java)) }
@@ -107,9 +131,9 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
 
     private fun markPerClause(
         perClause: PerClause,
+        anchor: PsiElement,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
-        val anchor = perClause.firstChild ?: return
         val aspect = PsiTreeUtil.getParentOfType(perClause, AspectDeclaration::class.java) ?: return
         result.add(
             NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementingMethod)
@@ -118,13 +142,5 @@ class AspectJLineMarkerProvider : RelatedItemLineMarkerProvider() {
                 .createLineMarkerInfo(anchor)
         )
     }
-
-    private fun AspectDeclaration.nameIdentifierLike(): PsiElement? {
-        var child = firstChild
-        while (child != null) {
-            if (child.node?.elementType == AspectJTokenTypes.IDENTIFIER) return child
-            child = child.nextSibling
-        }
-        return firstChild
-    }
 }
+

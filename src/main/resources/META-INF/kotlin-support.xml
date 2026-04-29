@@ -1,0 +1,31 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Kotlin AOP annotation highlighting -->
+        <annotator
+            language="kotlin"
+            implementationClass="org.example.aop.annotator.AopAnnotator"/>
+
+        <!-- Kotlin inspections -->
+        <localInspection
+            language="kotlin"
+            shortName="KotlinAspectNotBean"
+            displayName="@Aspect class is not a Spring Bean"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.KotlinAspectNotBeanInspection"/>
+        <localInspection
+            language="kotlin"
+            shortName="KotlinPointcutSyntax"
+            displayName="Invalid pointcut expression syntax"
+            groupName="AOP"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="org.example.aop.inspection.KotlinPointcutSyntaxInspection"/>
+
+        <!-- Kotlin code completion -->
+        <completion.contributor
+            language="kotlin"
+            implementationClass="org.example.aop.completion.AopCompletionContributor"/>
+    </extensions>
+</idea-plugin>

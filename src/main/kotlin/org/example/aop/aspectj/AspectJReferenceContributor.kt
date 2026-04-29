@@ -39,6 +39,9 @@ private class AspectJReferenceProvider : PsiReferenceProvider() {
                 }
                 is TypeReferenceElement -> {
                     add(AspectJTypeReference(element))
+                    if ('.' in element.text) {
+                        add(AspectJMemberReference(element))
+                    }
                 }
             }
 

@@ -16,7 +16,7 @@
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
-    <depends>org.jetbrains.kotlin</depends>
+    <depends optional="true" config-file="kotlin-support.xml">org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Plugin startup -->
@@ -39,6 +39,7 @@
         <fileBasedIndex implementation="org.example.aop.aspectj.AspectJDeclareIndex"/>
         <fileBasedIndex implementation="org.example.aop.aspectj.AspectJInterTypeIndex"/>
         <fileBasedIndex implementation="org.example.aop.aspectj.AspectJPointcutIndex"/>
+        <fileBasedIndex implementation="org.example.aop.aspectj.AspectJAdviceIndex"/>
 
         <!-- Phase 3: Find Usages for AspectJ pointcuts -->
         <findUsagesHandlerFactory implementation="org.example.aop.aspectj.AspectJFindUsagesHandlerFactory"/>
@@ -69,9 +70,7 @@
         <annotator
             language="JAVA"
             implementationClass="org.example.aop.annotator.AopAnnotator"/>
-        <annotator
-            language="kotlin"
-            implementationClass="org.example.aop.annotator.AopAnnotator"/>
+        <!-- Kotlin annotator moved to kotlin-support.xml -->
 
         <!-- Phase 3: inspections -->
         <localInspection
@@ -82,14 +81,7 @@
             enabledByDefault="true"
             level="WARNING"
             implementationClass="org.example.aop.inspection.AspectNotBeanInspection"/>
-        <localInspection
-            language="kotlin"
-            shortName="KotlinAspectNotBean"
-            displayName="@Aspect class is not a Spring Bean"
-            groupName="AOP"
-            enabledByDefault="true"
-            level="WARNING"
-            implementationClass="org.example.aop.inspection.KotlinAspectNotBeanInspection"/>
+        <!-- Kotlin inspection moved to kotlin-support.xml -->
 
         <localInspection
             language="JAVA"
@@ -99,22 +91,13 @@
             enabledByDefault="true"
             level="WARNING"
             implementationClass="org.example.aop.inspection.PointcutSyntaxInspection"/>
-        <localInspection
-            language="kotlin"
-            shortName="KotlinPointcutSyntax"
-            displayName="Invalid pointcut expression syntax"
-            groupName="AOP"
-            enabledByDefault="true"
-            level="WARNING"
-            implementationClass="org.example.aop.inspection.KotlinPointcutSyntaxInspection"/>
+        <!-- Kotlin inspection moved to kotlin-support.xml -->
 
         <!-- Phase 3: code completion -->
         <completion.contributor
             language="JAVA"
             implementationClass="org.example.aop.completion.AopCompletionContributor"/>
-        <completion.contributor
-            language="kotlin"
-            implementationClass="org.example.aop.completion.AopCompletionContributor"/>
+        <!-- Kotlin completion moved to kotlin-support.xml -->
         <completion.contributor
             language="AspectJ"
             implementationClass="org.example.aop.aspectj.AspectJCompletionContributor"/>
@@ -151,6 +134,13 @@
             text="Fix with AI"
             description="Fix the selected pointcut or AspectJ snippet with AI">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <action
+            id="org.example.aop.aspectj.CreateAspectJFileAction"
+            class="org.example.aop.aspectj.CreateAspectJFileAction"
+            text="AspectJ File"
+            description="Create a new AspectJ file">
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
         </action>
     </actions>
 </idea-plugin>
