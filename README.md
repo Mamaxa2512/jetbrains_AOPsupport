@@ -4,87 +4,100 @@
 [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2025.1-orange.svg)](https://www.jetbrains.com/idea/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Плагін для IntelliJ IDEA, який покращує розробку з Spring AOP та AspectJ, надаючи підтримку редактора, навігацію та інспекції коду.
+A plugin for IntelliJ IDEA that enhances development with Spring AOP and AspectJ by providing editor support, navigation, and code inspections.
 
-> **⚠️ Beta версія**: Цей плагін знаходиться на етапі внутрішнього бета-тестування. Функціонал може змінюватись.
+> **⚠️ Beta Version**: This plugin is currently in internal beta testing. Functionality may change.
 
-## 🎯 Основні можливості
+## 🎯 Key Features
 
-### 📍 Gutter іконки та навігація
-- Іконки біля `@Aspect` класів для швидкого переходу до advice методів
-- Іконки біля advice методів для повернення до aspect класу
-- Підтримка всіх типів advice: `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`
-- Іконки в `.aj` файлах для aspect declarations, pointcuts, `declare` statements, per-clauses та inter-type declarations
+### 📍 Gutter Icons and Navigation
 
-### 🎨 Підсвічування анотацій
-- Візуальне виділення AOP анотацій в редакторі
-- Швидка ідентифікація aspect-коду в проекті
+* Icons next to `@Aspect` classes for quick navigation to advice methods
+* Icons next to advice methods for returning to the aspect class
+* Support for all advice types: `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`
+* Icons in `.aj` files for aspect declarations, pointcuts, `declare` statements, per-clauses, and inter-type declarations
 
-### ⚡ Автодоповнення pointcut виразів
-- Розумне автодоповнення всередині pointcut рядків
-- Пропозиції:
-  - Pointcut designators: `execution`, `within`, `@annotation`, `@target`, `this`, `target`, `args`, `bean` та інші
-  - Логічні оператори: `&&`, `||`, `!`
-  - Шаблони виразів для типових сценаріїв
-- Працює в анотаціях `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, `@Pointcut`
-- Для `.aj` також підказує `declare` kinds, per-clauses та ключові AspectJ конструкції
+### 🎨 Annotation Highlighting
+
+* Visual highlighting of AOP annotations in the editor
+* Quick identification of aspect-related code throughout the project
+
+### ⚡ Pointcut Expression Autocompletion
+
+* Smart autocompletion inside pointcut strings
+* Suggestions include:
+
+  * Pointcut designators: `execution`, `within`, `@annotation`, `@target`, `this`, `target`, `args`, `bean`, and others
+  * Logical operators: `&&`, `||`, `!`
+  * Expression templates for common scenarios
+* Works in `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, and `@Pointcut` annotations
+* For `.aj` files, also suggests `declare` kinds, per-clauses, and key AspectJ constructs
 
 ### 🧩 Native `.aj` Support
-- Парсинг AspectJ аспектів з `privileged`, per-clauses, `declare` statements та inter-type declarations
-- PSI-навігація для pointcuts, `declare parents` та target types в inter-type declarations
-- Project-wide indexing для aspect names, pointcut names, `declare` kinds та inter-type targets
-- Hover documentation для pointcut declarations, `declare` statements і per-clauses
-- Інспекції для unresolved pointcuts, unresolved `declare parents` / inter-type target types та порожніх `declare warning/error` messages
 
-### 🤖 AI-помічники для pointcut і AspectJ
-- **Generate Pointcut from Description** — генерує pointcut з текстового опису
-- **Explain Pointcut** — пояснює вибраний pointcut або AspectJ-сніпет
-- **Optimize Pointcut** — підказує більш вузький і продуктивний варіант
-- **Fix with AI** — автоматично пропонує виправлення для вибраного pointcut / AspectJ-фрагмента
-- Працює з Java/Kotlin string literals і з вибраними AspectJ-фрагментами в `.aj`
+* Parsing of AspectJ aspects with `privileged`, per-clauses, `declare` statements, and inter-type declarations
+* PSI navigation for pointcuts, `declare parents`, and target types in inter-type declarations
+* Project-wide indexing for aspect names, pointcut names, `declare` kinds, and inter-type targets
+* Hover documentation for pointcut declarations, `declare` statements, and per-clauses
+* Inspections for unresolved pointcuts, unresolved `declare parents` / inter-type target types, and empty `declare warning/error` messages
 
-### 🔍 Інспекції коду
+### 🤖 AI Assistants for Pointcuts and AspectJ
+
+* **Generate Pointcut from Description** — generates a pointcut from a text description
+* **Explain Pointcut** — explains the selected pointcut or AspectJ snippet
+* **Optimize Pointcut** — suggests a narrower and more efficient alternative
+* **Fix with AI** — automatically suggests fixes for the selected pointcut / AspectJ fragment
+* Works with Java/Kotlin string literals and selected AspectJ fragments in `.aj`
+
+### 🔍 Code Inspections
 
 **AspectNotBean**
-- Попереджає, коли `@Aspect` клас не зареєстрований як Spring bean
-- Quick fix: автоматично додає `@Component` анотацію
-- Розпізнає всі Spring stereotype анотації та мета-анотації
 
-**PointcutSyntax** ⭐ НОВЕ в 1.1.0
-- **Детальна валідація синтаксису** pointcut виразів
-- Перевіряє структуру кожного designator:
-  - `execution()` - валідація method signatures, return types, parameters
-  - `within()` - валідація type patterns
-  - `@annotation()`, `@within()`, `@target()` - валідація annotation types
-  - `bean()` - валідація bean name patterns
-  - `args()`, `@args()` - валідація parameter patterns
-- **Performance warnings** для занадто широких patterns:
-  - `execution(* *(..))` - Warning: matches ALL methods
-  - `within(..*)` - Warning: matches ALL types
-- Виявляє помилки:
-  - Порожні вирази
-  - Незбалансовані дужки
-  - Невідомі designators
-  - Некоректні логічні оператори
-  - Відсутні оператори між виразами
-  - Невалідні type/method/parameter patterns
+* Warns when an `@Aspect` class is not registered as a Spring bean
+* Quick fix: automatically adds the `@Component` annotation
+* Recognizes all Spring stereotype annotations and meta-annotations
 
-## 📦 Встановлення
+**PointcutSyntax** ⭐ NEW in 1.1.0
 
-### З файлу
-1. Завантажте `AOP-1.2.0-beta.1.zip` з [releases](../../releases)
-2. В IntelliJ IDEA: `Settings` → `Plugins` → `⚙️` → `Install Plugin from Disk...`
-3. Виберіть завантажений ZIP файл
-4. Перезапустіть IDE
+* **Detailed syntax validation** for pointcut expressions
+* Validates the structure of each designator:
 
-### Вимоги
-- IntelliJ IDEA Community або Ultimate 2025.1 (build 251.x)
-- Java 8+ проекти
-- Spring Framework або AspectJ залежності в проекті
+  * `execution()` - validates method signatures, return types, parameters
+  * `within()` - validates type patterns
+  * `@annotation()`, `@within()`, `@target()` - validates annotation types
+  * `bean()` - validates bean name patterns
+  * `args()`, `@args()` - validates parameter patterns
+* **Performance warnings** for overly broad patterns:
 
-## 🚀 Швидкий старт
+  * `execution(* *(..))` - Warning: matches ALL methods
+  * `within(..*)` - Warning: matches ALL types
+* Detects errors such as:
 
-### 1. Створіть aspect клас
+  * Empty expressions
+  * Unbalanced parentheses
+  * Unknown designators
+  * Invalid logical operators
+  * Missing operators between expressions
+  * Invalid type/method/parameter patterns
+
+## 📦 Installation
+
+### From File
+
+1. Download `AOP-1.2.0-beta.1.zip` from [releases](../../releases)
+2. In IntelliJ IDEA: `Settings` → `Plugins` → `⚙️` → `Install Plugin from Disk...`
+3. Select the downloaded ZIP file
+4. Restart the IDE
+
+### Requirements
+
+* IntelliJ IDEA Community or Ultimate 2025.1 (build 251.x)
+* Java 8+ projects
+* Spring Framework or AspectJ dependencies in the project
+
+## 🚀 Quick Start
+
+### 1. Create an aspect class
 
 ```java
 package com.example.aspects;
@@ -104,186 +117,192 @@ public class LoggingAspect {
 }
 ```
 
-### 2. Використовуйте можливості плагіна
+### 2. Use the plugin features
 
-- **Gutter іконки**: Клікніть на іконку біля класу або методу для навігації
-- **Автодоповнення**: Всередині `"execution(...)"` натисніть `Ctrl+Space`
-- **Інспекції**: Плагін автоматично перевірить ваш код та покаже попередження
+* **Gutter icons**: Click the icon next to a class or method for navigation
+* **Autocompletion**: Inside `"execution(...)"`, press `Ctrl+Space`
+* **Inspections**: The plugin automatically checks your code and displays warnings
 
-### 3. Перевірте налаштування
+### 3. Verify settings
 
-`Settings` → `Editor` → `Inspections` → `AOP` - переконайтесь, що інспекції увімкнені
+`Settings` → `Editor` → `Inspections` → `AOP` - ensure inspections are enabled
 
-## 📋 Підтримувані можливості
+## 📋 Supported Features
 
-### ✅ Підтримується в Beta
+### ✅ Supported in Beta
 
-| Функція | Статус |
-|---------|--------|
-| Java файли | ✅ Повна підтримка |
-| Kotlin файли | ✅ Базова підтримка (інспекції, підсвічування, completion) |
-| Spring AOP | ✅ Основний фокус |
-| AspectJ `.aj` files | ✅ Розширена beta підтримка |
-| AspectJ анотації | ✅ Підмножина + native `.aj` PSI |
-| Gutter навігація | ✅ |
-| Автодоповнення | ✅ |
-| Інспекції | ✅ |
+| Feature             | Status                                                  |
+| ------------------- | ------------------------------------------------------- |
+| Java files          | ✅ Full support                                          |
+| Kotlin files        | ✅ Basic support (inspections, highlighting, completion) |
+| Spring AOP          | ✅ Primary focus                                         |
+| AspectJ `.aj` files | ✅ Extended beta support                                 |
+| AspectJ annotations | ✅ Subset + native `.aj` PSI                             |
+| Gutter navigation   | ✅                                                       |
+| Autocompletion      | ✅                                                       |
+| Inspections         | ✅                                                       |
 
-### Підтримувані pointcut designators
+### Supported Pointcut Designators
 
 `execution`, `within`, `this`, `target`, `args`, `@target`, `@within`, `@annotation`, `@args`, `bean`, `cflow`, `cflowbelow`, `initialization`, `preinitialization`, `staticinitialization`, `handler`, `adviceexecution`
 
-### ❌ Поза scope Beta
+### ❌ Out of Beta Scope
 
-- XML-конфігурація Spring AOP
-- Повна підтримка AspectJ compile-time weaving / LTW configuration
-- Semantic validation of every ITD member signature and all `declare precedence` ordering conflicts
-- Tool window для візуалізації
+* Spring AOP XML configuration
+* Full support for AspectJ compile-time weaving / LTW configuration
+* Semantic validation of every ITD member signature and all `declare precedence` ordering conflicts
+* Visualization tool window
 
-## 🧪 Тестування
+## 🧪 Testing
 
-### Smoke тести
+### Smoke Tests
 
-Дивіться детальний гайд: [`docs/smoke-test-guide.md`](docs/smoke-test-guide.md)
+See the detailed guide: [`docs/smoke-test-guide.md`](docs/smoke-test-guide.md)
 
-Швидкий чеклист:
-- [ ] Плагін завантажується без помилок
-- [ ] Gutter іконки з'являються
-- [ ] Навігація працює
-- [ ] Автодоповнення показує designators
-- [ ] Інспекції виявляють помилки
-- [ ] Quick fix додає `@Component`
+Quick checklist:
 
-### Запуск тестів
+* [ ] Plugin loads without errors
+* [ ] Gutter icons appear
+* [ ] Navigation works
+* [ ] Autocompletion shows designators
+* [ ] Inspections detect issues
+* [ ] Quick fix adds `@Component`
+
+### Running Tests
 
 ```bash
-# Повна збірка з тестами
+# Full build with tests
 ./gradlew clean build test
 
-# Тільки тести
+# Tests only
 ./gradlew test
 
-# Запуск в sandbox IDE
+# Run in sandbox IDE
 ./gradlew runIde
 ```
 
-## 🐛 Відомі обмеження
+## 🐛 Known Limitations
 
-- **Kotlin**: підтримуються базові editor-функції для анотаційних pointcut-виразів; розширений cross-file аналіз поки що обмежений
-- **Без XML**: XML-конфігурація Spring AOP не підтримується
-- **`.aj` support is beta**: grammar/indexing/navigation already cover major constructs, but advanced semantic checks are still expanding
-- **AspectJ weaving**: Повні можливості compile-time weaving поза scope
+* **Kotlin**: basic editor features for annotation-based pointcut expressions are supported; advanced cross-file analysis is still limited
+* **No XML**: Spring AOP XML configuration is not supported
+* **`.aj` support is beta**: grammar/indexing/navigation already cover major constructs, but advanced semantic checks are still expanding
+* **AspectJ weaving**: Full compile-time weaving capabilities are out of scope
 
-## 📝 Зворотній зв'язок
+## 📝 Feedback
 
-Ми шукаємо відгуки про:
-- Зручність використання функцій
-- False positives/negatives в інспекціях
-- Проблеми з продуктивністю
-- Відсутні функції, які покращили б ваш workflow
+We are looking for feedback on:
 
-### Як повідомити про проблему
+* Feature usability
+* False positives/negatives in inspections
+* Performance issues
+* Missing features that would improve your workflow
 
-Використовуйте [issue templates](.github/ISSUE_TEMPLATE/):
-- 🐛 Bug Report
-- ✨ Feature Request
-- ⚠️ False Positive/Negative
+### How to Report an Issue
 
-### Включіть:
-- Версію плагіна (1.2.0-beta.1)
-- Версію IntelliJ IDEA
-- Кроки для відтворення
-- Приклад коду (якщо можливо)
+Use the [issue templates](.github/ISSUE_TEMPLATE/):
+
+* 🐛 Bug Report
+* ✨ Feature Request
+* ⚠️ False Positive/Negative
+
+### Please Include:
+
+* Plugin version (1.2.0-beta.1)
+* IntelliJ IDEA version
+* Steps to reproduce
+* Code example (if possible)
 
 ## 🗺️ Roadmap
 
-Дивіться [`ROADMAP.md`](ROADMAP.md) для повного плану розробки.
+See [`ROADMAP.md`](ROADMAP.md) for the full development plan.
 
-### Наступні кроки після beta:
-- Tool window для огляду aspects/pointcuts
-- Cross-file аналіз використання pointcut
-- Покращена навігація до matched методів
-- Підтримка Kotlin (за запитом)
+### Next Steps After Beta:
 
-## 🏗️ Розробка
+* Tool window for aspect/pointcut overview
+* Cross-file pointcut usage analysis
+* Improved navigation to matched methods
+* Expanded Kotlin support (on demand)
 
-### Збірка плагіна
+## 🏗️ Development
+
+### Building the Plugin
 
 ```bash
-# Повна збірка
+# Full build
 ./gradlew clean build ktlintCheck
 
-# Швидка збірка без тестів
+# Fast build without tests
 ./gradlew buildPlugin -x test
 
-# Перевірка сумісності
+# Compatibility verification
 ./gradlew verifyPlugin
 ```
 
-Артефакт: `build/distributions/AOP-1.2.0-beta.1.zip`
+Artifact: `build/distributions/AOP-1.2.0-beta.1.zip`
 
-### Структура проекту
+### Project Structure
 
-```
+```text
 src/
 ├── main/
 │   ├── kotlin/org/example/aop/
-│   │   ├── annotator/      # Підсвічування анотацій
-│   │   ├── completion/     # Автодоповнення
-│   │   ├── inspection/     # Інспекції коду
-│   │   └── marker/         # Gutter іконки
+│   │   ├── annotator/      # Annotation highlighting
+│   │   ├── completion/     # Autocompletion
+│   │   ├── inspection/     # Code inspections
+│   │   └── marker/         # Gutter icons
 │   └── resources/
 │       └── META-INF/
-│           └── plugin.xml  # Конфігурація плагіна
+│           └── plugin.xml  # Plugin configuration
 └── test/
-    ├── kotlin/             # Unit тести
-    └── resources/fixtures/ # Тестові файли
+    ├── kotlin/             # Unit tests
+    └── resources/fixtures/ # Test files
 ```
 
-### Технології
+### Technologies
 
-- **Мова**: Kotlin
-- **Build**: Gradle 8.x
-- **Platform**: IntelliJ Platform SDK 2025.1
-- **Testing**: JUnit 5 + IntelliJ Platform Test Framework
+* **Language**: Kotlin
+* **Build**: Gradle 8.x
+* **Platform**: IntelliJ Platform SDK 2025.1
+* **Testing**: JUnit 5 + IntelliJ Platform Test Framework
 
-## 📄 Ліцензія
+## 📄 License
 
 [MIT License](LICENSE)
 
-## 👥 Автори
+## 👥 Authors
 
-Розроблено в рамках ініціативи AOP tooling.
+Developed as part of the AOP tooling initiative.
 
 ---
 
-**Версія**: 1.2.0-beta.1  
-**Дата релізу**: 2026-04-28  
-**Статус**: Internal Beta Testing
+**Version**: 1.2.0-beta.1
+**Release Date**: 2026-04-28
+**Status**: Internal Beta Testing
 
-## 🆕 Що нового в 1.1.0
+## 🆕 What's New in 1.1.0
 
-### Детальний синтаксичний аналіз pointcut виразів
+### Detailed Syntax Analysis for Pointcut Expressions
 
-Плагін тепер включає покращений парсер, який детально аналізує структуру кожного pointcut designator:
+The plugin now includes an enhanced parser that deeply analyzes the structure of each pointcut designator:
 
-- ✅ Валідація `execution()` patterns - перевіряє return types, method names, parameters
-- ✅ Валідація `within()` type patterns
-- ✅ Валідація annotation types в `@annotation()`, `@within()`, `@target()`
-- ✅ Валідація bean name patterns в `bean()`
-- ✅ Валідація parameter patterns в `args()` та `@args()`
-- ⚠️ Performance warnings для занадто широких patterns
+* ✅ Validation of `execution()` patterns - checks return types, method names, parameters
+* ✅ Validation of `within()` type patterns
+* ✅ Validation of annotation types in `@annotation()`, `@within()`, `@target()`
+* ✅ Validation of bean name patterns in `bean()`
+* ✅ Validation of parameter patterns in `args()` and `@args()`
+* ⚠️ Performance warnings for overly broad patterns
 
-**Приклад:**
+**Example:**
+
 ```java
 // ⚠️ Warning
 @Before("execution(* *(..))")
 // Warning: execution(* *(..)) matches ALL methods - this may cause performance issues
 
-// ✅ Краще
+// ✅ Better
 @Before("execution(* com.example.service.*.*(..))")
 ```
 
-Детальніше: [`docs/advanced-pointcut-analysis.md`](docs/advanced-pointcut-analysis.md)
+Learn more: [`docs/advanced-pointcut-analysis.md`](docs/advanced-pointcut-analysis.md)
 
-Дякуємо за тестування AOP Support плагіна! 🚀
+Thank you for testing the AOP Support plugin! 🚀
